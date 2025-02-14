@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles if needed */
+.hero-banner-container .beats-solo {
+  @apply text-lg;
+}
+
+.desc {
+  @apply absolute right-[10%] bottom-[5%] w-[300px] leading-relaxed flex flex-col text-[#93adc6];
+}
+
+.desc p {
+  @apply text-[#5f5f5f] font-light text-right;
+}
+
+.desc h5 {
+  @apply mb-3 font-bold text-lg self-end;
+}
+
+.hero-banner-container {
+  @apply p-24 bg-gray-300 rounded-lg relative h-[500px] leading-tight w-full;
+}
+
+.hero-banner-container button {
+  @apply rounded-lg p-2.5 bg-red-600 text-white border-none mt-10 text-lg font-medium cursor-pointer z-[10000];
+}
+
+.hero-banner-container h3 {
+  @apply text-4xl mt-1;
+}
+
+.hero-banner-container h1 {
+  @apply text-white text-[10em] ml-[-20px] uppercase;
+}
+
+.hero-banner-image {
+  @apply absolute top-0 right-20 w-[450px] h-[450px];
+}
+
+.products-heading {
+  @apply text-center my-10 text-[#324d67];
+}
+
+.products-heading h2 {
+  @apply text-4xl font-extrabold;
+}
+
+.products-heading p {
+  @apply text-lg font-light;
+}
+
+.products-container {
+  @apply flex flex-wrap justify-center gap-4 mt-5 w-full;
+}
+
+.maylike-products-container {
+  @apply flex justify-center gap-4 mt-5;
+}
+
+.product-card {
+  @apply cursor-pointer transform scale-100 transition-transform duration-500 ease-in-out text-[#324d67] hover:scale-110;
+}
+
+.product-image {
+  @apply rounded-lg bg-[#ebebeb] transform scale-100 transition-transform duration-500 ease-in-out;
+}
+
+.product-name {
+  @apply font-medium;
+}
+
+.product-price {
+  @apply font-extrabold mt-1.5 text-black;
+}
+
+.hero-banner-image {
+  @apply absolute top-0 right-20 w-[550px] h-[350px];
+}
