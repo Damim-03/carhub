@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { BsReverseLayoutTextSidebarReverse } from 'react-icons/bs';
 import { X } from 'lucide-react';
@@ -41,16 +41,30 @@ const NavBar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  let scrollTimeout: number | undefined;
+  let lastScrollPosition: number = window.scrollY; // Renamed to avoid redeclaration error
+
   const controlNavbar = () => {
-    if (window.scrollY > lastScrollY) {
+    if (scrollTimeout) clearTimeout(scrollTimeout); // Prevent undefined timeout issues
+
+    if (window.scrollY > lastScrollPosition) {
+      // Scrolling down -> Hide navbar immediately
       gsap.to('.navbar', { y: '-100%', duration: 0.01 });
       setIsVisible(false);
     } else {
-      gsap.to('.navbar', { y: '0%', duration: 0.09 });
-      setIsVisible(true);
+      // Scrolling up -> Wait until scrolling stops before showing navbar
+      scrollTimeout = window.setTimeout(() => {
+        gsap.to('.navbar', { y: '0%', duration: 0.5 });
+        setIsVisible(true);
+      }, 150);
     }
-    setLastScrollY(window.scrollY);
+
+    lastScrollPosition = window.scrollY; // Update last scroll position
   };
+
+// Attach event listener with passive mode for better performance
+  window.addEventListener('scroll', controlNavbar, { passive: true });
+
 
   useEffect(() => {
     window.addEventListener('scroll', controlNavbar);
