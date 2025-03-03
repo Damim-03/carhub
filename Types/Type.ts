@@ -83,8 +83,8 @@ export interface OptionProps {
 }
 
 export interface InputFieldProps {
-  type?: string, 
-  placeholder?: string, 
+  type?: string,
+  placeholder?: string,
   icon: LucideIcon
   value?: string;
   onChange: (e: unknown) => void;
