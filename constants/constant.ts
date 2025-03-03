@@ -134,6 +134,15 @@ export const manufacturers = [
     { id: 4, text: "AboutUS", link: "/about-us" }
   ];
 
+  export const navlists_mercedes = [
+          { id: 1, text: "Art & Culture", link: "/" },
+      { id: 2, text: "Sustainability", link: "/" },
+      { id: 3, text: "Design", link: "/" },
+      { id: 4, text: "Innvoation", link: "/" },
+      { id: 5, text: "Exclusive", link: "/" },
+      { id: 6, text: "Vehicles", link: "/" },
+  ]
+
 export const hightlightsSlides = [
   {
     id: 1,

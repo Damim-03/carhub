@@ -1,4 +1,4 @@
 import Footer from './Footer'
-import Navbar from './Navbar'
+import Navbar_Mercedes from './Navbar_Mercedes'
 
-export { Footer, Navbar }
+export { Footer, Navbar_Mercedes }
