@@ -1,7 +1,6 @@
 import { Routes, Route } from "react-router-dom"
 import { Home } from '../Home'
 import { EmailVerification, ForgotPassword, Login, ResetPassword, Signup } from '../pages/Auth'
-import HomeDash from '../pages/Dashboard/pages/HomeDash'
 import HomePage from '../pages/Home/HomePage'
 import Product from '../pages/Products/Product'
 import MercedesHome from '../pages/Car_Models/Mercedes/MercedesHome'
@@ -31,7 +30,6 @@ const App = () => {
       <Routes>
          <Route path="/HomePage" element={<HomePage searchParams={searchParams} />} />
          <Route path="/Product" element={<Product product={Product} />} />
-         <Route path="/dashboard" element={<HomeDash />}/>
       </Routes>
 
       <Routes>
