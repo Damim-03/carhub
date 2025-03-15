@@ -1,23 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { NavBar, Footer } from '../../Home';
-import { SearchBar, CustomFilter, ShowMore, CarCard, HeroBanner } from '../Home/utils';
-import { fuels, yearsOfProduction } from '../../constants/constant';
+import { useEffect, useState } from 'react';
+import {NavBar, Footer} from '../../Home';
 import { HomeProps } from '../../Types/Type';
-//import { fetchCars } from '../../Data/data';
 import '../Home/Styles/global.css';
 import gsap from "gsap";
+import ImageGallery from "../Products/ImageGallery.tsx";
+import ProductInfo from "../Products/ProductInfo.tsx";
+import ProductDetailsComponent from "../Products/ProductDetails.tsx";
+import RelatedProducts from "../Products/RelatedProducts.tsx";
+import { productData } from "../Products/data/productData.ts";
 
 const HomePage = ({ searchParams }: HomeProps): JSX.Element => {
-
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
-  const [allCars, setAllCars] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isDataEmpty, setIsDataEmpty] = useState(false);
 
   useEffect(() => {
     document.documentElement.className = theme;
     localStorage.setItem('theme', theme);
   }, [theme]);
+
   const toggleTheme = () => {
     const newTheme = theme === 'dark' ? 'light' : 'dark';
     gsap.to('body', {
@@ -32,90 +31,28 @@ const HomePage = ({ searchParams }: HomeProps): JSX.Element => {
     });
   };
 
-  /*useEffect(() => {
-    let isMounted = true; // To prevent state updates if the component unmounts
-
-    const fetchData = async () => {
-      try {
-        setIsLoading(true);
-
-        const cars = await fetchCars({
-          manufacturer: searchParams.manufacturer || "",
-          year: searchParams.year || 2022,
-          fuel: searchParams.fuel || "",
-          limit: searchParams.limit || 10,
-          model: searchParams.model || "",
-        });
-
-        if (isMounted) {
-          setAllCars(cars);
-          setIsDataEmpty(!cars || cars.length === 0);
-        }
-      } catch (error) {
-        console.error("Error fetching cars:", error);
-        if (isMounted) {
-          setAllCars([]);
-          setIsDataEmpty(true);
-        }
-      } finally {
-        if (isMounted) {
-          setIsLoading(false);
-        }
-      }
-    };
-
-    fetchData();
-
-    return () => {
-      isMounted = false; // Cleanup to avoid state updates after unmount
-    };
-  }, [searchParams]);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }*/
-
   return (
-    <>
-      <NavBar />
-      <div className="hero dark:bg-slate-800">
-        <div className="flex-1 pt-36 padding-x">
-          <div className="home__text-container text-center sm:text-left px-4 py-8 sm:px-6 lg:px-0">
-            <div className="home__filters">
-              <SearchBar />
-              <div className="home__filter-container flex px-3 flex-row sm:flex-row gap-8 sm:gap-4">
-                <CustomFilter title="Fuel" options={fuels} />
-                <CustomFilter title="Year" options={yearsOfProduction} />
+      <>
+        <div className="bg-white dark:bg-slate-800">
+          <NavBar />
+          <main className="overflow-hidden dark:bg-slate-800 pt-20">
+            {/* Product Top Section */}
+            <div className="bg-white rounded-md shadow-sm p-4 md:p-6 mb-6 dark:bg-slate-800">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 dark:bg-slate-800">
+                <ImageGallery images={productData.images} className={'dark:bg-slate-800'} />
+                <ProductInfo product={productData} className={'dark:bg-slate-800'} />
               </div>
             </div>
-            <HeroBanner heroBanner={undefined} />
-          </div>
 
-          {!isDataEmpty ? (
-              <section>
-                <div className="home__cars-wrapper">
-                  {allCars.map((car) => (
-                      <CarCard car={car} />
-                  ))}
-                </div>
-                <ShowMore
-                    pageNumber={(searchParams.limit || 10) / 10}
-                    isNext={(searchParams.limit || 10) > allCars.length}
-                />
-              </section>
-          ) : (
-              <div className="home__error-container">
-                <h2 className="text-black text-xl font-bold">Oops, no results</h2>
-                <p>{allCars?.message || "No cars available at the moment."}</p>
-              </div>
-          )}
-          <div className='hero__image-container'>
-            <div className="hero__image-overlay" />
-          </div>
+            {/* Product Details Section */}
+            <ProductDetailsComponent product={productData} className="mb-8" />
+
+            {/* Related Products */}
+            <RelatedProducts products={productData.relatedProducts} className="mb-8" />
+          </main>
+          <Footer />
         </div>
-      </div>
-      <Footer />
-    </>
+      </>
   );
 };
 

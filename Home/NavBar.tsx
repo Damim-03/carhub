@@ -122,7 +122,7 @@ const NavBar = () => {
                 title="Register"
                 btnType="button"
                 containerStyles={`hidden md:block text-primary-blue rounded-full 
-        bg-white min-w-[100px] md:min-w-[130px] px-4 py-2 dark:text-black`}
+                   bg-white min-w-[100px] md:min-w-[130px] px-4 py-2 border bg-gray-400 dark:text-primary-blue`}
             />
             <ToggleButton darkMode={theme === "dark"} toggleTheme={toggleTheme} />
           </div>
