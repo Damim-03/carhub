@@ -5,6 +5,7 @@ import HomePage from '../pages/Home/HomePage'
 import Product from '../pages/Products/Product'
 import MercedesHome from '../pages/Car_Models/Mercedes/MercedesHome'
 import { FilterProps } from "../Types/Type"
+import Cars from "../pages/Dashboard/pages/Cars.tsx";
 
 const App = () => {
 
@@ -34,7 +35,7 @@ const App = () => {
 
       <Routes>
         <Route path="/Mercedes" element={<MercedesHome />} />
-        <Route />
+        <Route path="/Cars" element={<Cars />}/>
         <Route />
       </Routes>
     </>
