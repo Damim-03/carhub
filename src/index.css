@@ -18,6 +18,7 @@
   max-width: 1120px;
 }
 
+
 /* START: General styles */
 .max-width {
   @apply max-w-[1440px] mx-auto;

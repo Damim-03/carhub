@@ -59,7 +59,7 @@ const NavbarLoginSignup = () => {
     {/* Desktop Navigation */}
     <div className="hidden md:flex items-center gap-8 lg:gap-32 justify-center flex-grow ml-[10px]"> {/* Add margin-left */}
       <Link
-        to="/HomePage"
+        to="/ProductDetails"
         className="text-black font-semibold hover:text-blue-500 transition duration-200 dark:text-white"
       >
         Home
@@ -117,7 +117,7 @@ const NavbarLoginSignup = () => {
             />
           </Link>
           <Link
-            to="/HomePage"
+            to="/ProductDetails"
             className="text-black font-semibold hover:text-blue-500 transition duration-200 dark:text-white"
             onClick={toggleSidebar}
           >

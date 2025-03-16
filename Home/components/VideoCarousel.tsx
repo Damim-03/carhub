@@ -1,17 +1,16 @@
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/all";
-gsap.registerPlugin(ScrollTrigger);
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SyntheticEvent, useEffect, useRef, useState } from "react";
-
 import { hightlightsSlides } from "../../constants/constant";
 import { pauseImg, playImg, replayImg } from "../../Utils";
-import React from "react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const VideoCarousel = () => {
-    const videoRef = useRef<(HTMLVideoElement | null)[]>([]);
-    const videoSpanRef = useRef<(HTMLSpanElement | null)[]>([]);
-    const videoDivRef = useRef<(HTMLDivElement | null)[]>([]);
+  const videoRef = useRef<(HTMLVideoElement | null)[]>([]);
+  const videoSpanRef = useRef<(HTMLSpanElement | null)[]>([]);
+  const videoDivRef = useRef<(HTMLDivElement | null)[]>([]);
 
   // video and indicator
   const [video, setVideo] = useState({
@@ -51,7 +50,6 @@ const VideoCarousel = () => {
     }
   };
 
-
   const [loadedData, setLoadedData] = useState<SyntheticEvent<HTMLVideoElement, Event>[]>([]);
   const { isEnd, isLastVideo, startPlay, videoId, isPlaying } = video;
 
@@ -79,7 +77,6 @@ const VideoCarousel = () => {
     });
   }, [isEnd, videoId]);
 
-
   useEffect(() => {
     let currentProgress = 0;
     const span = videoSpanRef.current;
@@ -97,11 +94,11 @@ const VideoCarousel = () => {
             // set the width of the progress bar
             gsap.to(videoDivRef.current[videoId], {
               width:
-                window.innerWidth < 760
-                  ? "10vw" // mobile
-                  : window.innerWidth < 1200
-                  ? "10vw" // tablet
-                  : "4vw", // laptop
+                  window.innerWidth < 760
+                      ? "10vw" // mobile
+                      : window.innerWidth < 1200
+                          ? "10vw" // tablet
+                          : "4vw", // laptop
             });
 
             // set the background color of the progress bar
@@ -132,7 +129,7 @@ const VideoCarousel = () => {
       // update the progress bar
       const animUpdate = () => {
         anim.progress(
-          videoRef.current[videoId].currentTime /
+            videoRef.current[videoId].currentTime /
             hightlightsSlides[videoId].videoDuration
         );
       };
@@ -259,7 +256,7 @@ const VideoCarousel = () => {
         <div className="relative flex-center mt-10">
           <div className="flex-center py-5 px-7 bg-gray-400 backdrop-blur rounded-full dark:bg-gray-700">
             {hightlightsSlides.map((_, i) => (
-                <span
+                <div
                     key={i}
                     className="mx-2 w-3 h-3 rounded-full bg-gray-300 relative cursor-pointer"
                     ref={(el) => {
@@ -273,7 +270,7 @@ const VideoCarousel = () => {
                     if (el) videoSpanRef.current[i] = el;
                   }}
               />
-            </span>
+                </div>
             ))}
           </div>
 

@@ -128,7 +128,7 @@ export const manufacturers = [
   ];
 
   export const navLists = [
-    { id: 1, text: "Home", link: "/HomePage" },
+    { id: 1, text: "Home", link: "/ShowCars" },
     { id: 2, text: "Services", link: "/services" },
     { id: 3, text: "Product", link: "/Product" },
     { id: 4, text: "AboutUS", link: "/about-us" }

@@ -1,4 +1,3 @@
-"use client";
 
 import { ShowMoreProps } from "../../../Types/Type";
 import { updateSearchParams } from "../../../Data/data";

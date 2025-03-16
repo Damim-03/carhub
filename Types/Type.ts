@@ -2,6 +2,7 @@ import { LucideIcon } from "lucide-react";
 import { MouseEventHandler } from "react";
 
 export interface CarProps {
+  id: number;
   city_mpg: number;
   class: string;
   combination_mpg: number;
@@ -17,11 +18,18 @@ export interface CarProps {
 }
 
 export interface ProductProps {
+  index: number;
   title: string;
   value: string;
   image: string;
-  product: ProductProps;
-  link: string;
+  link?: string;
+  product: string;
+}
+
+export interface User {
+  id: number;
+  name: string;
+  picture: string;
 }
 
 export interface FilterProps {
