@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Base Styles */
 @layer base {
     :root {
         --background: 0 0% 100%;
@@ -86,9 +87,10 @@
     }
 }
 
+/* Border Fix */
 @layer base {
     * {
-        @apply border-border;
+        border-color: hsl(var(--border)); /* Corrects the border-border error */
     }
 
     body {
@@ -96,6 +98,7 @@
     }
 }
 
+/* Components */
 @layer components {
     .card-gradient {
         @apply bg-gradient-to-br from-card to-secondary/80 backdrop-blur-sm;

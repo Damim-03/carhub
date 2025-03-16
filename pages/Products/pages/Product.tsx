@@ -1,9 +1,10 @@
-import { Footer, NavBar } from '../../Home';
-import { LogosCard } from '../../pages/Products/utils'
-import { Products } from '../../constants/constant';
+import { Footer, NavBar } from '../../../Home';
+import { LogosCard } from '../utils'
+import { Products } from '../../../constants/constant';
+import {ProductProps} from "../../../Types/Type.ts";
 //import { ProductProps } from '../../Types/Type';
 
-const Product = (/*{ product }: ProductProps*/): JSX.Element => {
+const Product = ({ product }: ProductProps): JSX.Element => {
   return (
     <>
     <div className="bg-white dark:bg-slate-800 min-h-screen">

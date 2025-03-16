@@ -55,7 +55,7 @@ const SearchBar = () => {
   return (
     <form 
   className="searchbar flex flex-col sm:flex-row gap-4 items-center 
-  sm:items-stretch justify-center px-4 sm:px-6 lg:px-8 dark:bg-slate-800"
+  sm:items-stretch justify-center px-4 sm:px-6 lg:px-8"
   onSubmit={handleSearch}
 >
   {/* Manufacturer Search */}

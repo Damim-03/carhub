@@ -1,5 +1,5 @@
 
-import { cn } from "./lib/utils";
+import { cn } from "../lib/utils";
 import { Star, StarHalf } from "lucide-react";
 
 interface RatingProps {

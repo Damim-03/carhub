@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
-import {NavBar, Footer} from '../../Home';
-import { HomeProps } from '../../Types/Type';
-import '../Home/Styles/global.css';
+import {NavBar, Footer} from '../../../Home';
+import { HomeProps } from '../../../Types/Type';
+import '../../Home/Styles/global.css';
 import gsap from "gsap";
-import ImageGallery from "../Products/ImageGallery.tsx";
-import ProductInfo from "../Products/ProductInfo.tsx";
-import ProductDetailsComponent from "../Products/ProductDetails.tsx";
-import RelatedProducts from "../Products/RelatedProducts.tsx";
-import { productData } from "../Products/data/productData.ts";
+import ImageGallery from "../utils/ImageGallery.tsx";
+import ProductInfo from "../utils/ProductInfo.tsx";
+import ProductDetailsComponent from "./ProductDetails.tsx";
+import RelatedProducts from "../utils/RelatedProducts.tsx";
+import { productData } from "../data/productData.ts";
 
-const HomePage = ({ searchParams }: HomeProps): JSX.Element => {
+const ProductDetails = ({ searchParams }: HomeProps): JSX.Element => {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 
   useEffect(() => {
@@ -56,4 +56,4 @@ const HomePage = ({ searchParams }: HomeProps): JSX.Element => {
   );
 };
 
-export default HomePage;
+export default ProductDetails;

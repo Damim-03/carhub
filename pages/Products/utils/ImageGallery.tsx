@@ -1,10 +1,10 @@
 
 import { useState } from "react";
-import { ProductImage } from "./data/productData.ts";
-import { cn } from "./lib/utils";
+import { ProductImage } from "../data/productData.ts";
+import { cn } from "../lib/utils";
 import { Maximize2 } from "lucide-react";
-import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog.tsx";
-import { useIsMobile } from "./hooks/use-mobile.tsx";
+import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog.tsx";
+import { useIsMobile } from "../hooks/use-mobile.tsx";
 
 interface ImageGalleryProps {
     images: ProductImage[];

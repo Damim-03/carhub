@@ -1,9 +1,9 @@
 
-import { RelatedProduct } from "./data/productData";
-import { Card, CardContent } from "./ui/card";
-import Rating from "./Rating";
-import { cn } from "./lib/utils";
-import { useIsMobile } from "./hooks/use-mobile";
+import { RelatedProduct } from "../data/productData";
+import { Card, CardContent } from "../ui/card";
+import Rating from "./Rating.tsx";
+import { cn } from "../lib/utils";
+import { useIsMobile } from "../hooks/use-mobile";
 
 interface RelatedProductsProps {
     products: RelatedProduct[];

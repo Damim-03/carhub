@@ -16,7 +16,5 @@ export { SearchBar,
     CarCard, 
     CarDetails, 
     ShowMore, 
-    SearchModel, 
-    HeroBanner,
-    Product
+    SearchModel,
 } 

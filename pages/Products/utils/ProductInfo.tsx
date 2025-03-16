@@ -1,12 +1,12 @@
 
 import { useState } from "react";
-import { cn } from "./lib/utils";
-import { ProductDetails, ProductColor } from "./data/productData";
-import Rating from "./Rating";
+import { cn } from "../lib/utils";
+import { ProductDetails, ProductColor } from "../data/productData";
+import Rating from "./Rating.tsx";
 import { Heart, ShoppingCart, Truck } from "lucide-react";
-import { Button } from "./ui/button";
-import { Badge } from "./ui/badge";
-import { useToast } from "./ui/use-toast";
+import { Button } from "../ui/button";
+import { Badge } from "../ui/badge";
+import { useToast } from "../ui/use-toast";
 
 interface ProductInfoProps {
     product: ProductDetails;

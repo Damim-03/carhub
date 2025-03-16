@@ -1,15 +1,17 @@
 
 import { DashboardLayout } from "../components/layouts/dashboard-layout"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../components/ui/card"
-import { Button } from "../components/ui/button"
-import { Car, ArrowRight } from "lucide-react"
-//import '../styles/Global.css'
+import { Car } from "lucide-react"
+import {CustomButton} from "../../Home/utils";
+import {useState} from "react";
+import '../styles/Global.css'
 
 // Sample car data - in a real app, this would come from an API or database
 const carsData = [
   {
     id: 1,
     model: "Tesla Model S",
+    logo: '../assets/images/logo.png',
     year: 2023,
     price: "$79,990",
     color: "Midnight Silver",
@@ -75,6 +77,8 @@ const Cars = () => {
     // In a real app, this would navigate to a detailed view or open a modal
   }
 
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <DashboardLayout>
       <div className="flex flex-col gap-6">
@@ -82,7 +86,7 @@ const Cars = () => {
           <h1 className="text-3xl font-bold tracking-tight">Cars</h1>
           <p className="text-muted-foreground">Manage car inventory</p>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {carsData.map((car) => (
             <Card key={car.id} className="hover:shadow-md transition-shadow">
@@ -94,9 +98,9 @@ const Cars = () => {
               </CardHeader>
               <CardContent>
                 <div className="aspect-video bg-muted rounded-md mb-4 flex items-center justify-center">
-                  <img 
-                    src={car.image} 
-                    alt={car.model} 
+                  <img
+                    src={car.image}
+                    alt={car.model}
                     className="h-full w-full object-cover rounded-md"
                   />
                 </div>
@@ -126,13 +130,14 @@ const Cars = () => {
                 </div>
               </CardContent>
               <CardFooter>
-                <Button 
-                  className="w-full" 
-                  onClick={() => handleMoreDetails(car.id)}
-                >
-                  More Details
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
+                <CustomButton
+                    title="View More"
+                    containerStyles="w-full py-[16px] rounded-full bg-primary-blue"
+                    textStyles="text-white text-[14px] leading-[17px] font-bold"
+                    rightIcon="/right-arrow.svg"
+                    handleClick={() => setIsOpen(true)}
+                />
+
               </CardFooter>
             </Card>
           ))}
