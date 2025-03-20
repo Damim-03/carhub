@@ -1,12 +1,13 @@
 import { Routes, Route } from "react-router-dom"
 import { Home } from '../Home'
 import { EmailVerification, ForgotPassword, Login, ResetPassword, Signup } from '../pages/Auth'
-import ProductDetails from '../pages/Products/pages/ProductDetails.tsx'
-import Product from '../pages/Products/pages/Product.tsx'
+import ProductDetails from "../pages/Products/pages/ProductDetails";
+import Product from '../pages/Products/pages/Product'
 import MercedesHome from '../pages/Car_Models/Mercedes/MercedesHome'
-import { FilterProps } from "../Types/Type"
-import Cars from "../pages/Dashboard/pages/Cars.tsx";
-import ProductCard from "../pages/Products/pages/ProductCard.tsx";
+import {FilterProps, ProductProps} from "../Types/Type"
+import Cars from "../pages/Dashboard/pages/Cars";
+import ProductCard from "../pages/Home/ProductCard";
+import About from "../pages/AboutUS/About";
 
 const App = () => {
 
@@ -17,6 +18,15 @@ const App = () => {
     limit: 0,
     fuel: ""
   };
+
+  const product: ProductProps = {
+      index: 0,
+      title: "",
+      value: "",
+      image: "",
+      link : "",
+      product: "",
+  }
 
   return (
     <>
@@ -29,16 +39,20 @@ const App = () => {
         <Route path="/reset-password" element={<ResetPassword />}/>
       </Routes>
 
+        <Routes>
+            <Route path={'/Me'} element={<Cars />}/>
+            <Route path={'/Cars'} element={<Cars />}/>
+        </Routes>
+
       <Routes>
-          <Route path="/ShowCars" element={<ProductCard />} />
-         <Route path="/ProductDetails" element={<ProductDetails searchParams={searchParams} />} />
-         <Route path="/Product" element={<Product product={Product} />} />
+          <Route path="/vehicles" element={<ProductCard />} />
+          <Route path="/product-details" element={<ProductDetails searchParams={searchParams} />} />
+          <Route path="/Product" element={<Product product={product} />} />
+          <Route path="/aboutus" element={<About />} />
       </Routes>
 
       <Routes>
         <Route path="/Mercedes" element={<MercedesHome />} />
-        <Route path="/Cars" element={<Cars />}/>
-        <Route />
       </Routes>
     </>
   )

@@ -69,7 +69,6 @@ export interface ProductDetails {
   relatedProducts: RelatedProduct[];
 }
 
-// Mock product data
 export const productData: ProductDetails = {
   id: 1,
   name: "Wireless Bluetooth Headphones with Noise Cancellation and High Fidelity Sound",

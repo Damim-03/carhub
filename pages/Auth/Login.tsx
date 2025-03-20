@@ -72,12 +72,12 @@ const Login = () => {
     </div>
     <div className="px-4 sm:px-6 py-4 bg-gray-900 bg-opacity-50 flex justify-center">
       <p className="text-sm text-gray-400 text-center">
-        Already Have an account?{" "}
+        Don't have an account ?{" "}
         <Link
           className="text-white hover:underline"
           to={"/register"}
         >
-          Login
+          Signup
         </Link>
       </p>
     </div>

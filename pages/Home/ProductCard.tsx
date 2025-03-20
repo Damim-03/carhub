@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { fuels, yearsOfProduction } from "../../../constants/constant";
-import { CarCard, CustomFilter, SearchBar, ShowMore } from "../../Home/utils";
-import {Footer, Hero, NavBar} from "../../../Home";
-import NotFound from "./NotFound.tsx";
-import {CarProps} from "../../../Types/Type.ts";
+import { fuels, yearsOfProduction } from "../../constants/constant";
+import { CarCard, CustomFilter, SearchBar, ShowMore } from "./utils";
+import {Footer, Hero, NavBar} from "../../Home";
+import NotFound from "../Products/pages/NotFound.tsx";
+import {CarProps} from "../../Types/Type.ts";
 
 const ProductCard = () => {
 
@@ -11,14 +11,6 @@ const ProductCard = () => {
     const [error, setError] = useState(false);
 
     useEffect(() => {
-        // Simulating a random failure in fetching data
-        const shouldFail = Math.random() < 0.3; // 30% chance to fail
-
-        if (shouldFail) {
-            setError(true);
-            return;
-        }
-
         // Otherwise, set the dummy data
         setCars([
             {

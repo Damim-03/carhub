@@ -115,7 +115,7 @@ const NavBar = () => {
           )}
           <div className="flex items-center gap-6">
             {user ? (
-                <Link to={'/Cars'}>
+                <Link to={'/Me'}>
                   <img src={user.picture} alt="User" className="w-10 h-10 rounded-full" />
                 </Link>
             ) : (

@@ -123,3 +123,27 @@ export interface CarDetailsProps {
   closeModal: () => void;
   car: CarProps;
 }
+
+export interface ServiceCardProps {
+  title: string;
+  description: string;
+  icon: string;
+}
+
+export interface TeamMemberProps {
+  name: string;
+  role: string;
+  bio: string;
+  image: string;
+}
+
+export interface TimelineItemProps {
+  year: string;
+  milestone: string;
+  description: string;
+}
+
+export interface SectionHeaderProps {
+  title: string;
+  subtitle: string;
+}
