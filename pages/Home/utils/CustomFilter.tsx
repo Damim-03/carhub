@@ -27,9 +27,9 @@ export default function CustomFilter({ title, options }: CustomFilterProps) {
       >
         <div className='relative w-fit z-10'>
           {/* Button for the listbox */}
-          <Listbox.Button className='custom-filter__btn'>
-            <span className='block truncate text-black dark:text-black'>{selected.title}</span>
-            <Image src='/chevron-up-down.svg' width={20} height={20} className='ml-4 object-contain' alt='chevron_up-down' />
+          <Listbox.Button className='custom-filter__btn bg-white dark:bg-slate-800 dark:border-white'>
+            <span className='block truncate text-black dark:text-white'>{selected.title}</span>
+            <Image src='/chevron-up-down.svg' width={20} height={20} className='ml-4 object-contain dark:invert' alt='chevron_up-down' />
           </Listbox.Button>
           {/* Transition for displaying the options */}
           <Transition

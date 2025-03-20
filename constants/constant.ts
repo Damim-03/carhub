@@ -3,12 +3,11 @@ import {
   blueImg,
   MercedesVideo,
   highlightFourthVideo,
-  highlightSecondVideo,
   highlightThirdVideo,
   whiteImg,
   yellowImg,
   BMWVideo,
-} from "../Utils/index";
+} from "../Utils";
 
 export const manufacturers = [
     "Acura",
@@ -128,10 +127,10 @@ export const manufacturers = [
   ];
 
   export const navLists = [
-    { id: 1, text: "Home", link: "/ShowCars" },
+    { id: 1, text: "Vehicles", link: "/vehicles" },
     { id: 2, text: "Services", link: "/services" },
     { id: 3, text: "Product", link: "/Product" },
-    { id: 4, text: "AboutUS", link: "/about-us" }
+    { id: 4, text: "AboutUS", link: "/aboutus" }
   ];
 
   export const navlists_mercedes = [
@@ -212,4 +211,102 @@ export const models = [
 export const sizes = [
   { label: '6.1"', value: "small" },
   { label: '6.7"', value: "large" },
+];
+
+export const services = [
+    {
+        id: 1,
+        title: "Car Rental",
+        description: "Find the perfect car for your needs with our extensive fleet. From economy to luxury, we have options for every budget and occasion.",
+        icon: "car"
+    },
+    {
+        id: 2,
+        title: "Car Maintenance",
+        description: "Keep your vehicle in top condition with our professional maintenance services. Our certified technicians ensure your car runs smoothly.",
+        icon: "wrench"
+    },
+    {
+        id: 3,
+        title: "Car Insurance",
+        description: "Comprehensive coverage options to protect your vehicle and give you peace of mind on the road. Get personalized quotes today.",
+        icon: "shield"
+    },
+    {
+        id: 4,
+        title: "Car Detailing",
+        description: "Professional detailing services to keep your car looking new. Interior and exterior packages available for all vehicle types.",
+        icon: "sprayCan"
+    },
+    {
+        id: 5,
+        title: "Road Assistance",
+        description: "24/7 emergency assistance when you need it most. Our team is always ready to help with breakdowns, flat tires, and more.",
+        icon: "phone"
+    },
+    {
+        id: 6,
+        title: "Car Customization",
+        description: "Transform your vehicle with our customization services. From performance upgrades to aesthetic modifications, we do it all.",
+        icon: "paintBucket"
+    }
+];
+
+export const teamMembers = [
+    {
+        id: 1,
+        name: "Sarah Johnson",
+        role: "CEO & Founder",
+        bio: "Sarah founded CarHub with a vision to revolutionize the automotive industry through technology and customer-centric services.",
+        image: "/team/sarah.jpg"
+    },
+    {
+        id: 2,
+        name: "Michael Rodriguez",
+        role: "Chief Operations Officer",
+        bio: "With over 15 years in the automotive industry, Michael ensures our operations run smoothly and efficiently.",
+        image: "/team/michael.jpg"
+    },
+    {
+        id: 3,
+        name: "David Chen",
+        role: "Chief Technology Officer",
+        bio: "David leads our tech initiatives, developing innovative solutions that keep CarHub at the forefront of the industry.",
+        image: "/team/david.jpg"
+    },
+    {
+        id: 4,
+        name: "Amara Wilson",
+        role: "Customer Experience Director",
+        bio: "Amara is dedicated to creating exceptional experiences for every customer who interacts with CarHub.",
+        image: "/team/amara.jpg"
+    }
+];
+
+export const companyHistory = [
+    {
+        year: "2015",
+        milestone: "CarHub Founded",
+        description: "CarHub was established with a mission to simplify car rental and automotive services."
+    },
+    {
+        year: "2017",
+        milestone: "Expanded Services",
+        description: "Added maintenance, insurance, and roadside assistance to our service offerings."
+    },
+    {
+        year: "2019",
+        milestone: "National Expansion",
+        description: "Opened locations in 12 major cities across the country to better serve our growing customer base."
+    },
+    {
+        year: "2021",
+        milestone: "Digital Transformation",
+        description: "Launched our mobile app and online platform for seamless service booking and car rentals."
+    },
+    {
+        year: "2023",
+        milestone: "Industry Recognition",
+        description: "Received the prestigious Automotive Excellence Award for our innovative customer service approach."
+    }
 ];

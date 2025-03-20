@@ -1,10 +1,11 @@
-import { Fragment } from "react";
+import {Fragment} from "react";
 import { Image } from "../../../Home/components";
 
 import { Dialog, Transition } from "@headlessui/react";
 import { CarProps } from "../../../Types/Type";
 import { generateCarImageUrl } from "../../../Data/data";
-import React from "react";
+import {CustomButton} from "./index.ts";
+import {Link} from "react-router-dom";
 
 interface CarDetailsProps {
   isOpen: boolean;
@@ -90,6 +91,14 @@ const CarDetails = ({ isOpen, closeModal, car }: CarDetailsProps) => (
                     ))}
                   </div>
                 </div>
+                <Link to={'/product-details'}>
+                  <CustomButton
+                      title='Show the Vehicle'
+                      containerStyles='w-full py-[16px] rounded-full bg-primary-blue'
+                      textStyles='text-white text-[14px] leading-[17px] font-bold'
+                      rightIcon='/right-arrow.svg'
+                  />
+                </Link>
               </Dialog.Panel>
             </Transition.Child>
           </div>

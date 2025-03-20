@@ -137,7 +137,6 @@ const Cars = () => {
                     rightIcon="/right-arrow.svg"
                     handleClick={() => setIsOpen(true)}
                 />
-
               </CardFooter>
             </Card>
           ))}

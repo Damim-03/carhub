@@ -25,8 +25,10 @@
 }
 
 .bg-mercedes {
-  @apply bg-cover bg-center h-screen bg-[url('/Mercedes.jpg')];
+  @apply bg-cover bg-center h-screen;
+  background-image: url("/Mercedes.jpg");
 }
+
 
 .padding-x {
   @apply sm:px-16 px-6;
@@ -231,7 +233,7 @@
 
 @layer utilities {
   .bg-mercedes {
-    @apply bg-cover bg-center h-screen sm:h-[75vh] md:h-[80vh] lg:h-[90vh] bg-[url('/Mercedes.jpg')];
+    @apply bg-cover bg-center h-screen sm:h-[75vh] md:h-[80vh] lg:h-[90vh] bg-[url('./Mercedes.jpg')];
   }
 
   .flex-center {
