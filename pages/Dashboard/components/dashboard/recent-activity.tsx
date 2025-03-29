@@ -1,6 +1,6 @@
 
-import { Avatar, AvatarFallback, AvatarImage } from "../../components/ui/avatar"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../components/ui/card"
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar.tsx"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card.tsx"
 import { cn } from "../../lib/utils"
 
 interface Activity {

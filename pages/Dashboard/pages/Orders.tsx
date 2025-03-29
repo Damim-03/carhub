@@ -1,9 +1,9 @@
 
-import { DashboardLayout } from "@/components/layouts/dashboard-layout"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Package, Calendar, User, DollarSign, Clock, CheckCircle, XCircle } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
+import { DashboardLayout } from "../components/layouts/dashboard-layout"
+import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card"
+import { Button } from "../components/ui/button"
+import { Package, Calendar, User, Clock, CheckCircle, XCircle } from "lucide-react"
+import { Badge } from "../components/ui/badge"
 
 // Sample orders data - in a real app, this would come from an API or database
 const ordersData = [

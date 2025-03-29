@@ -1,5 +1,5 @@
 
-import { DashboardLayout } from "@/components/layouts/dashboard-layout"
+import { DashboardLayout } from "../components/layouts/dashboard-layout"
 
 const Sales = () => {
   return (

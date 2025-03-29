@@ -8,6 +8,12 @@ import {FilterProps, ProductProps} from "../Types/Type"
 import Cars from "../pages/Dashboard/pages/Cars";
 import ProductCard from "../pages/Home/ProductCard";
 import About from "../pages/AboutUS/About";
+import Index from "../pages/Dashboard/pages/Index.tsx";
+import Overwrite from "../pages/Dashboard/pages/Overwrite.tsx";
+import Sales from "../pages/Dashboard/pages/Sales.tsx";
+import Users from "../pages/Dashboard/pages/Users.tsx";
+import Customers from "../pages/Dashboard/pages/Customers.tsx";
+import Orders from "../pages/Dashboard/pages/Orders.tsx";
 
 const App = () => {
 
@@ -40,7 +46,12 @@ const App = () => {
       </Routes>
 
         <Routes>
-            <Route path={'/Me'} element={<Cars />}/>
+            <Route path={'/Me'} element={<Index />}/>
+            <Route path={'/overwrite'} element={<Overwrite />}/>
+            <Route path={'/sales'} element={<Sales />}/>
+            <Route path={'/users'} element={<Users />}/>
+            <Route path={'/customers'} element={<Customers />}/>
+            <Route path={'/orders'} element={<Orders />}/>
             <Route path={'/Cars'} element={<Cars />}/>
         </Routes>
 
