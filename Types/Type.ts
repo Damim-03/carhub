@@ -17,6 +17,35 @@ export interface CarProps {
   year: number;
 }
 
+export interface OrderItem {
+  id: number;
+  name: string;
+  quantity: number;
+  price: number;
+}
+
+export interface Order {
+  id: string;
+  date: string;
+  items: OrderItem[];
+  total: number;
+  paymentStatus: string;
+}
+
+export interface Customer {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+  avatarUrl: string;
+  totalSpent: number;
+  totalOrders: number;
+  joinDate: string;
+  status: "Active" | "Inactive";
+  pendingOrders: Order[];
+}
+
 export interface ProductProps {
   index: number;
   title: string;

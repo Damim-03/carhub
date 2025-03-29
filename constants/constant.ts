@@ -8,6 +8,7 @@ import {
   yellowImg,
   BMWVideo,
 } from "../Utils";
+import { Customer } from "../Types/Type.ts";
 
 export const manufacturers = [
     "Acura",
@@ -308,5 +309,106 @@ export const companyHistory = [
         year: "2023",
         milestone: "Industry Recognition",
         description: "Received the prestigious Automotive Excellence Award for our innovative customer service approach."
+    }
+];
+
+export const customersData: Customer[] = [
+    {
+        id: 1,
+        name: "John Doe",
+        email: "john.doe@example.com",
+        phone: "+1 (555) 123-4567",
+        address: "123 Main St, San Francisco, CA 94105",
+        avatarUrl: "https://i.pravatar.cc/150?u=john",
+        totalSpent: 79990,
+        totalOrders: 1,
+        joinDate: "2023-05-15",
+        status: "Active",
+        pendingOrders: []
+    },
+    {
+        id: 2,
+        name: "Sarah Johnson",
+        email: "sarah.j@example.com",
+        phone: "+1 (555) 987-6543",
+        address: "456 Oak Ave, Los Angeles, CA 90001",
+        avatarUrl: "https://i.pravatar.cc/150?u=sarah",
+        totalSpent: 159200,
+        totalOrders: 3,
+        joinDate: "2023-02-10",
+        status: "Active",
+        pendingOrders: [
+            {
+                id: "ORD-2023-2002",
+                date: "2023-11-18",
+                items: [
+                    { id: 1, name: "Rivian R1S", quantity: 1, price: 78000 },
+                    { id: 2, name: "Premium Protection Plan", quantity: 1, price: 3500 },
+                ],
+                total: 81500,
+                paymentStatus: "Pending Approval"
+            }
+        ]
+    },
+    {
+        id: 3,
+        name: "Michael Chen",
+        email: "m.chen@example.com",
+        phone: "+1 (555) 444-5555",
+        address: "789 Pine St, Seattle, WA 98101",
+        avatarUrl: "https://i.pravatar.cc/150?u=michael",
+        totalSpent: 109600,
+        totalOrders: 2,
+        joinDate: "2023-07-22",
+        status: "Active",
+        pendingOrders: [
+            {
+                id: "ORD-2023-2003",
+                date: "2023-11-20",
+                items: [
+                    { id: 1, name: "Lucid Air", quantity: 1, price: 87400 },
+                    { id: 2, name: "Extended Warranty", quantity: 1, price: 4500 },
+                ],
+                total: 91900,
+                paymentStatus: "Pending Approval"
+            }
+        ]
+    },
+    {
+        id: 4,
+        name: "Emily Wilson",
+        email: "e.wilson@example.com",
+        phone: "+1 (555) 222-3333",
+        address: "101 Maple Dr, Chicago, IL 60007",
+        avatarUrl: "https://i.pravatar.cc/150?u=emily",
+        totalSpent: 43895,
+        totalOrders: 1,
+        joinDate: "2023-08-05",
+        status: "Active",
+        pendingOrders: []
+    },
+    {
+        id: 5,
+        name: "Robert Brown",
+        email: "r.brown@example.com",
+        phone: "+1 (555) 777-8888",
+        address: "222 Elm St, Austin, TX 78701",
+        avatarUrl: "https://i.pravatar.cc/150?u=robert",
+        totalSpent: 78500,
+        totalOrders: 1,
+        joinDate: "2023-04-17",
+        status: "Inactive",
+        pendingOrders: [
+            {
+                id: "ORD-2023-2003",
+                date: "2023-11-20",
+                items: [
+                    { id: 1, name: "Lucid Air", quantity: 1, price: 87400 },
+                    { id: 2, name: "Extended Warranty", quantity: 1, price: 4500 },
+                ],
+                total: 91900,
+                paymentStatus: "Pending Approval"
+            }
+        ]
     }
 ];

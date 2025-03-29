@@ -61,7 +61,7 @@ export function Sidebar({ className }: SidebarProps) {
   };
 
   const links: SidebarLink[] = [
-    { icon: <LayoutDashboard size={20} />, label: "Dashboard", href: "/" },
+    { icon: <LayoutDashboard size={20} />, label: "Dashboard", href: "/Me" },
     { icon: <FileText size={20} />, label: "Overwrite", href: "/overwrite" },
     { icon: <ShoppingCart size={20} />, label: "Sales", href: "/sales" },
     { icon: <Users size={20} />, label: "Users", href: "/users" },
