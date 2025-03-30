@@ -1,50 +1,79 @@
-# React + TypeScript + Vite
+# 🚗 CarHub - Modern Car Showcase
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A sleek React + TypeScript car showcase application built with Vite, featuring:
+- Dark/light mode toggle 🌓
+- Interactive car galleries 🖼️
+- Detailed vehicle specifications 📊
+- Responsive design 📱💻
 
-Currently, two official plugins are available:
+## 🚀 Quick Start
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Prerequisites
+- Node.js ≥18.x
+- npm ≥9.x or yarn
 
-## Expanding the ESLint configuration
+```bash
+# Clone repository
+git clone https://github.com/Damim-03/carhub.git
+cd carhub
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+# Install dependencies
+npm install
 
-- Configure the top-level `parserOptions` property like this:
+# Start dev server
+npm run dev
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+Open http://localhost:5173 in your browser.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+🌓 Theme System
+Toggle between dark/light modes
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+User preference persists via localStorage
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+Smooth transitions with GSAP animations
+
+🖼️ Image Gallery Features
+High-resolution car images
+
+Zoom functionality
+
+Thumbnail navigation
+
+Fullscreen mode
+
+🤝 How to Contribute
+Fork the repository
+
+Create a feature branch (git checkout -b feature/your-feature)
+
+Commit your changes (git commit -m 'Add some feature')
+
+Push to the branch (git push origin feature/your-feature)
+
+Open a Pull Request
+
+📜 License
+MIT © Damim-03
+
+📬 Contact
+GitHub: @Damim-03
+
+Project Link: https://github.com/Damim-03/carhub
+
+
+Key features of this README:
+1. **Customized** for your CarHub project specifically
+2. **Clean Markdown formatting** for optimal GitHub display
+3. **Visual hierarchy** with emojis and clear sections
+4. **Accurate structure** matching your repository
+5. **Complete setup instructions**
+6. **Responsive-ready** documentation
+
+To use:
+1. Copy this entire content
+2. Replace your current README.md
+3. Push changes to GitHub:
+```bash
+git add README.md
+git commit -m "Update project README"
+git push
