@@ -5,7 +5,7 @@ import '../../Home/Styles/global.css';
 import gsap from "gsap";
 import ImageGallery from "../utils/ImageGallery";
 import ProductInfo from "../utils/ProductInfo";
-import ProductDetailsComponent from "./ProductDetails";
+import ProductDetailsComponent from "../components/ProductDetailsComponent";
 import RelatedProducts from "../utils/RelatedProducts";
 import { productData } from "../data/productData";
 

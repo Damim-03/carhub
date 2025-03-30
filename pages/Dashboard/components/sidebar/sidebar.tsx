@@ -82,9 +82,26 @@ export function Sidebar({ className }: SidebarProps) {
           )}
       >
         <div className="flex items-center py-4 px-4">
-          <div className={cn("flex items-center gap-2", collapsed ? "justify-center w-full" : "")}>
-            <Home className="h-6 w-6 text-sidebar-primary" />
-            {!collapsed && <span className="text-xl font-bold text-sidebar-primary">Drivona</span>}
+          <div className={cn(
+              "flex items-center gap-2 p-2 rounded-md transition-all",
+              collapsed ? "justify-center w-10 h-10" : "w-full px-3 py-2",
+              "hover:bg-sidebar-hover focus:outline-none focus:ring-2 focus:ring-sidebar-focus"
+          )}>
+            <Link
+                to={'/'}
+                className="flex items-center gap-2 w-full h-full"
+                aria-label={collapsed ? "Home" : "Drivona Home"}
+            >
+              <Home className={cn(
+                  "h-6 w-6 flex-shrink-0",
+                  collapsed ? "text-sidebar-primary" : "text-sidebar-primary"
+              )} />
+              {!collapsed && (
+                  <span className="text-xl font-bold text-sidebar-primary whitespace-nowrap">
+        Drivona
+      </span>
+              )}
+            </Link>
           </div>
           <Button
               variant="ghost"

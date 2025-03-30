@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { ProductImage } from "../data/productData.ts";
+import { useState, useCallback } from "react";
+import { ProductImage } from "../data/productData";
 import { cn } from "../lib/utils";
 import { Maximize2 } from "lucide-react";
-import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog.tsx";
-import { useIsMobile } from "../hooks/use-mobile.tsx";
+import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
+import { useIsMobile } from "../hooks/use-mobile";
 
 interface ImageGalleryProps {
     images: ProductImage[];
@@ -16,29 +16,45 @@ const ImageGallery = ({ images, className }: ImageGalleryProps) => {
     const [zoomPosition, setZoomPosition] = useState({ x: 50, y: 50 });
     const isMobile = useIsMobile();
 
-    const handleImageHover = (e: React.MouseEvent<HTMLDivElement>) => {
+    const handleImageHover = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
         if (!isZoomed || isMobile) return;
 
         const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
-        const x = ((e.clientX - left) / width) * 100;
-        const y = ((e.clientY - top) / height) * 100;
+        const x = Math.max(0, Math.min(100, ((e.clientX - left) / width) * 100));
+        const y = Math.max(0, Math.min(100, ((e.clientY - top) / height) * 100));
 
         setZoomPosition({ x, y });
-    };
+    }, [isZoomed, isMobile]);
+
+    const handleImageSelect = useCallback((image: ProductImage) => {
+        setSelectedImage(image);
+        setIsZoomed(false);
+    }, []);
+
+    if (!images || images.length === 0) {
+        return (
+            <div className={cn("flex items-center justify-center h-[300px] bg-gray-100 dark:bg-gray-800 rounded-md", className)}>
+                <p className="text-gray-500 dark:text-gray-400">No images available</p>
+            </div>
+        );
+    }
 
     return (
         <div className={cn("flex flex-col md:flex-row gap-4 dark:bg-slate-800", className)}>
             {/* Thumbnails */}
             <div className="flex md:flex-col gap-2 order-2 md:order-1 overflow-x-auto md:overflow-y-auto md:max-h-[500px] md:min-w-[90px] md:w-[90px] scrollbar-hide">
                 {images.map((image) => (
-                    <div
+                    <button
                         key={image.id}
                         className={cn(
-                            "min-w-[60px] w-[60px] h-[60px] md:min-w-[80px] md:w-[80px] md:h-[80px] " +
-                            "rounded-md overflow-hidden cursor-pointer transition-all",
-                            selectedImage.id === image.id ? "border-2 border-red-500" : "border border-gray-300 dark:border-gray-600"
+                            "flex-shrink-0 min-w-[60px] w-[60px] h-[60px] md:min-w-[80px] md:w-[80px] md:h-[80px]",
+                            "rounded-md overflow-hidden cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500",
+                            selectedImage.id === image.id
+                                ? "border-2 border-red-500"
+                                : "border border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500"
                         )}
-                        onClick={() => setSelectedImage(image)}
+                        onClick={() => handleImageSelect(image)}
+                        aria-label={`View ${image.alt}`}
                     >
                         <img
                             src={image.url}
@@ -46,7 +62,7 @@ const ImageGallery = ({ images, className }: ImageGalleryProps) => {
                             className="w-full h-full object-cover"
                             loading="lazy"
                         />
-                    </div>
+                    </button>
                 ))}
             </div>
 
@@ -58,24 +74,27 @@ const ImageGallery = ({ images, className }: ImageGalleryProps) => {
                         onMouseMove={handleImageHover}
                         onMouseEnter={() => !isMobile && setIsZoomed(true)}
                         onMouseLeave={() => setIsZoomed(false)}
+                        aria-label="Product image zoom area"
                     >
                         <img
                             src={selectedImage.url}
                             alt={selectedImage.alt}
                             className={cn(
                                 "w-full h-full object-contain transition-transform duration-200",
-                                isZoomed && !isMobile && "scale-125"
+                                isZoomed && !isMobile ? "scale-125" : "scale-100"
                             )}
-                            style={
-                                isZoomed && !isMobile
-                                    ? { transformOrigin: `${zoomPosition.x}% ${zoomPosition.y}%` }
-                                    : undefined
-                            }
+                            style={{
+                                transformOrigin: isZoomed && !isMobile
+                                    ? `${zoomPosition.x}% ${zoomPosition.y}%`
+                                    : "center"
+                            }}
                         />
+
                         {/* Fullscreen Button */}
                         <DialogTrigger asChild>
                             <button
-                                className="absolute bottom-4 right-4 p-2 bg-white/80 dark:bg-gray-800/80 rounded-full shadow-md hover:bg-white dark:hover:bg-gray-700 transition"
+                                className="absolute bottom-4 right-4 p-2 bg-white/80 dark:bg-gray-800/80 rounded-full shadow-md hover:bg-white dark:hover:bg-gray-700 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500"
+                                aria-label="View image in fullscreen"
                                 title="View full screen"
                             >
                                 <Maximize2 className="h-5 w-5 text-gray-800 dark:text-white" />
@@ -89,6 +108,7 @@ const ImageGallery = ({ images, className }: ImageGalleryProps) => {
                             src={selectedImage.url}
                             alt={selectedImage.alt}
                             className="max-w-full max-h-full object-contain"
+                            loading="eager"
                         />
                     </DialogContent>
                 </Dialog>
