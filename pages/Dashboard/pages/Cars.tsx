@@ -5,6 +5,7 @@ import { Car } from "lucide-react"
 import {CustomButton} from "../../Home/utils";
 import {useState} from "react";
 import '../styles/Global.css'
+import {Link} from "react-router-dom";
 
 // Sample car data - in a real app, this would come from an API or database
 const carsData = [
@@ -129,14 +130,23 @@ const Cars = () => {
                   </div>
                 </div>
               </CardContent>
-              <CardFooter>
-                <CustomButton
-                    title="View More"
-                    containerStyles="w-full py-[16px] rounded-full bg-primary-blue"
-                    textStyles="text-white text-[14px] leading-[17px] font-bold"
-                    rightIcon="/right-arrow.svg"
-                    handleClick={() => setIsOpen(true)}
-                />
+              <CardFooter className="p-4">
+                <Link
+                    to="/product-details"
+                    className="block w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-blue focus-visible:ring-offset-2 rounded-full"
+                    onClick={(e) => {
+                      setIsOpen(true);
+                      // Don't prevent default - let the link work normally
+                    }}
+                >
+                  <CustomButton
+                      title="View More"
+                      containerStyles="w-full py-4 rounded-full bg-primary-blue hover:bg-primary-blue-dark transition-colors duration-200"
+                      textStyles="text-white text-sm font-bold tracking-wide"
+                      rightIcon="/right-arrow.svg"
+                      aria-label="View product details"
+                  />
+                </Link>
               </CardFooter>
             </Card>
           ))}
