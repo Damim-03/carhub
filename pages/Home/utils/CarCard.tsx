@@ -14,7 +14,7 @@ const CarCard = ({ car }: CarCardProps) => {
 
     return (
         <div className="car-card group dark:bg-slate-600 dark:hover:border-gray-600">
-            <div className="car-card__content text-black dark:text-white">
+            <div className="car-card__content text-black dark:text-white ">
                 <h2 className="car-card__content-title">
                     {make} {model}
                 </h2>
