@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { Image } from './components'
 import { footerLinks } from '../constants/constant'
 import { Link } from 'react-router-dom'
