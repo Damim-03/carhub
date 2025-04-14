@@ -2,7 +2,6 @@ import { useEffect, useState, useRef } from "react";
 import { Navbar_Mercedes } from "./utils";
 
 const MercedesHome = () => {
-    const [scrollPosition, setScrollPosition] = useState(0);
     const [activeSection, setActiveSection] = useState(0);
     const containerRef = useRef(null);
 
@@ -25,7 +24,7 @@ const MercedesHome = () => {
             title: "Innovation that excites.",
             subtitle: "Experience MBUX Hyperscreen",
             background: "bg-white",
-            video: "/videos/eqs-technology.mp4",
+            video: "/Mercedes.jpg",
             textColor: "text-black"
         },
         {
@@ -45,7 +44,6 @@ const MercedesHome = () => {
     useEffect(() => {
         const handleScroll = () => {
             const position = window.scrollY;
-            setScrollPosition(position);
 
             // Calculate active section based on scroll position
             const windowHeight = window.innerHeight;
@@ -60,7 +58,7 @@ const MercedesHome = () => {
     }, [activeSection]);
 
     // Scroll to section function
-    const scrollToSection = (index) => {
+    const scrollToSection = (index: number) => {
         window.scrollTo({
             top: index * window.innerHeight,
             behavior: "smooth"
@@ -74,7 +72,8 @@ const MercedesHome = () => {
             {sections.map((section, index) => (
                 <section
                     key={index}
-                    className={`h-screen w-full flex items-center justify-center relative overflow-hidden ${section.background} transition-colors duration-500`}
+                    className={`h-screen w-full flex items-center justify-center relative 
+                    overflow-hidden ${section.background} transition-colors duration-500`}
                 >
                     {/* Video background if available */}
                     {section.video && (

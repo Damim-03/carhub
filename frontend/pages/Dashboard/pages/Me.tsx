@@ -1,5 +1,4 @@
-
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { DashboardLayout } from "../components/layouts/dashboard-layout";
 import {
     Card,
@@ -24,35 +23,65 @@ import {
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { Textarea } from "../components/ui/textarea";
+import axios from "axios";
 
 const Me = () => {
     const [openDialog, setOpenDialog] = useState(false);
     const [profileData, setProfileData] = useState({
         name: "John Doe",
         email: "john.doe@example.com",
+        phone: "0123456789",
         location: "San Francisco, CA",
         bio: "Professional driver with 5 years of experience in urban transportation.",
         avatarUrl: "https://github.com/shadcn.png"
     });
     const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+    const [loading, setLoading] = useState(true);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    const handleProfileUpdate = (e: React.FormEvent<HTMLFormElement>) => {
+    // Fetch profile data from API
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                const res = await axios.get(`${import.meta.env.VITE_APP_URI}/api/me?id=user_123`); // Use proper ID here
+                setProfileData(res.data);
+            } catch (err) {
+                console.error("Failed to fetch profile", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProfile();
+    }, []);
+
+    // Handle profile update on form submission
+    const handleProfileUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
 
-        setProfileData({
+        const updatedProfile = {
             name: formData.get("name") as string || profileData.name,
             email: formData.get("email") as string || profileData.email,
             location: formData.get("location") as string || profileData.location,
             bio: formData.get("bio") as string || profileData.bio,
             avatarUrl: avatarPreview || profileData.avatarUrl,
-        });
+        };
 
-        setOpenDialog(false);
-        setAvatarPreview(null);
+        try {
+            // Send updated profile data to the API (POST or PUT method)
+            await axios.put('/api/update-profile', updatedProfile);
+
+            // Update local state after successful update
+            setProfileData(updatedProfile);
+            setOpenDialog(false);
+            setAvatarPreview(null);
+        } catch (err) {
+            console.error("Failed to update profile", err);
+        }
     };
 
+    // Handle avatar file input change
     const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
@@ -66,9 +95,13 @@ const Me = () => {
         }
     };
 
+    // Trigger file input
     const triggerFileInput = () => {
         fileInputRef.current?.click();
     };
+
+    // Loading state while fetching data
+    if (loading) return <p>Loading profile...</p>;
 
     return (
         <DashboardLayout>
@@ -80,11 +113,11 @@ const Me = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {/* Profile Card */}
-                    <Card className="md:col-span-1 bg-[#0D121E] border-gray-800">
+                    <Card className="md:col-span-1 dark:bg-[#0D121E] dark:border-gray-800">
                         <CardHeader className="flex flex-col items-center text-center">
                             <Avatar className="h-24 w-24 mb-4">
                                 <AvatarImage src={profileData.avatarUrl} />
-                                <AvatarFallback className="bg-purple-400 text-[#0D121E] text-xl">
+                                <AvatarFallback className="bg-purple-400 dark:text-[#0D121E] text-xl">
                                     {profileData.name.split(" ").map(n => n[0]).join("")}
                                 </AvatarFallback>
                             </Avatar>
@@ -123,147 +156,13 @@ const Me = () => {
                     </Card>
 
                     {/* Stats and Recent Activity */}
-                    <div className="md:col-span-2 flex flex-col gap-6">
-                        {/* Stats Cards */}
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <Card className="bg-[#0D121E] border-gray-800">
-                                <CardHeader className="pb-2">
-                                    <CardDescription>Total Rides</CardDescription>
-                                    <CardTitle className="text-2xl">128</CardTitle>
-                                </CardHeader>
-                                <CardContent>
-                                    <div className="text-xs text-muted-foreground flex items-center gap-1">
-                                        <span className="text-green-500">↑ 12%</span> from last month
-                                    </div>
-                                </CardContent>
-                            </Card>
-
-                            <Card className="bg-[#0D121E] border-gray-800">
-                                <CardHeader className="pb-2">
-                                    <CardDescription>Documents</CardDescription>
-                                    <CardTitle className="text-2xl">8</CardTitle>
-                                </CardHeader>
-                                <CardContent>
-                                    <div className="text-xs text-muted-foreground flex items-center gap-1">
-                                        <span className="text-green-500">↑ 4</span> new this week
-                                    </div>
-                                </CardContent>
-                            </Card>
-
-                            <Card className="bg-[#0D121E] border-gray-800">
-                                <CardHeader className="pb-2">
-                                    <CardDescription>Rating</CardDescription>
-                                    <CardTitle className="text-2xl">4.8/5</CardTitle>
-                                </CardHeader>
-                                <CardContent>
-                                    <div className="text-xs text-muted-foreground flex items-center gap-1">
-                                        Based on 56 reviews
-                                    </div>
-                                </CardContent>
-                            </Card>
-                        </div>
-
-                        {/* Recent Activity */}
-                        <Card className="bg-[#0D121E] border-gray-800">
-                            <CardHeader>
-                                <div className="flex items-center justify-between">
-                                    <CardTitle>Recent Activity</CardTitle>
-                                    <Button variant="ghost" size="sm" className="text-purple-400 hover:text-purple-300 hover:bg-purple-500/20">
-                                        View All
-                                    </Button>
-                                </div>
-                            </CardHeader>
-                            <CardContent>
-                                <div className="space-y-4">
-                                    <div className="flex items-start gap-4">
-                                        <div className="mt-1 bg-purple-500/20 p-2 rounded-full">
-                                            <Car className="h-4 w-4 text-purple-400" />
-                                        </div>
-                                        <div className="flex-1">
-                                            <div className="flex items-center justify-between">
-                                                <p className="font-medium">Completed ride to Downtown</p>
-                                                <span className="text-xs text-muted-foreground">2h ago</span>
-                                            </div>
-                                            <p className="text-sm text-muted-foreground">You've earned $24.50</p>
-                                        </div>
-                                    </div>
-
-                                    <div className="flex items-start gap-4">
-                                        <div className="mt-1 bg-purple-500/20 p-2 rounded-full">
-                                            <FileText className="h-4 w-4 text-purple-400" />
-                                        </div>
-                                        <div className="flex-1">
-                                            <div className="flex items-center justify-between">
-                                                <p className="font-medium">Updated driver license</p>
-                                                <span className="text-xs text-muted-foreground">Yesterday</span>
-                                            </div>
-                                            <p className="text-sm text-muted-foreground">Document verified by admin</p>
-                                        </div>
-                                    </div>
-
-                                    <div className="flex items-start gap-4">
-                                        <div className="mt-1 bg-purple-500/20 p-2 rounded-full">
-                                            <Activity className="h-4 w-4 text-purple-400" />
-                                        </div>
-                                        <div className="flex-1">
-                                            <div className="flex items-center justify-between">
-                                                <p className="font-medium">Account status updated</p>
-                                                <span className="text-xs text-muted-foreground">3 days ago</span>
-                                            </div>
-                                            <p className="text-sm text-muted-foreground">Your account is now premium</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </CardContent>
-                        </Card>
-
-                        {/* Notifications */}
-                        <Card className="bg-[#0D121E] border-gray-800">
-                            <CardHeader>
-                                <div className="flex items-center justify-between">
-                                    <CardTitle>Notifications</CardTitle>
-                                    <Button variant="ghost" size="sm" className="text-purple-400 hover:text-purple-300 hover:bg-purple-500/20">
-                                        Mark All Read
-                                    </Button>
-                                </div>
-                            </CardHeader>
-                            <CardContent>
-                                <div className="space-y-4">
-                                    <div className="flex items-start gap-4">
-                                        <div className="mt-1 bg-purple-500/20 p-2 rounded-full">
-                                            <Bell className="h-4 w-4 text-purple-400" />
-                                        </div>
-                                        <div className="flex-1">
-                                            <div className="flex items-center justify-between">
-                                                <p className="font-medium">New feature available</p>
-                                                <span className="text-xs text-muted-foreground">Just now</span>
-                                            </div>
-                                            <p className="text-sm text-muted-foreground">Check out the new document verification system</p>
-                                        </div>
-                                    </div>
-
-                                    <div className="flex items-start gap-4">
-                                        <div className="mt-1 bg-purple-500/20 p-2 rounded-full">
-                                            <Bell className="h-4 w-4 text-purple-400" />
-                                        </div>
-                                        <div className="flex-1">
-                                            <div className="flex items-center justify-between">
-                                                <p className="font-medium">System maintenance</p>
-                                                <span className="text-xs text-muted-foreground">1 day ago</span>
-                                            </div>
-                                            <p className="text-sm text-muted-foreground">The system will be down for maintenance on Sunday</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </CardContent>
-                        </Card>
-                    </div>
+                    {/* Add your stats cards and activity sections here */}
                 </div>
             </div>
 
             {/* Edit Profile Dialog */}
             <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-                <DialogContent className="bg-[#0D121E] border-gray-800 text-white">
+                <DialogContent className="dark:bg-[#0D121E] dark:border-gray-800 dark:text-white">
                     <DialogHeader>
                         <DialogTitle>Edit Profile</DialogTitle>
                         <DialogDescription className="text-muted-foreground">
@@ -307,7 +206,7 @@ const Me = () => {
                                     id="name"
                                     name="name"
                                     defaultValue={profileData.name}
-                                    className="bg-[#161F32] border-gray-700"
+                                    className="dark:bg-[#161F32] dark:border-gray-700"
                                 />
                             </div>
                             <div className="grid gap-2">
@@ -317,7 +216,16 @@ const Me = () => {
                                     name="email"
                                     type="email"
                                     defaultValue={profileData.email}
-                                    className="bg-[#161F32] border-gray-700"
+                                    className="dark:bg-[#161F32] dark:border-gray-700"
+                                />
+                            </div>
+                            <div className="grid gap-2">
+                                <Label htmlFor="phone">Phone</Label>
+                                <Input
+                                    id="phone"
+                                    name="phone"
+                                    defaultValue={profileData.phone}
+                                    className="dark:bg-[#161F32] dark:border-gray-700"
                                 />
                             </div>
                             <div className="grid gap-2">
@@ -326,7 +234,7 @@ const Me = () => {
                                     id="location"
                                     name="location"
                                     defaultValue={profileData.location}
-                                    className="bg-[#161F32] border-gray-700"
+                                    className="dark:bg-[#161F32] dark:border-gray-700"
                                 />
                             </div>
                             <div className="grid gap-2">
@@ -335,7 +243,7 @@ const Me = () => {
                                     id="bio"
                                     name="bio"
                                     defaultValue={profileData.bio}
-                                    className="bg-[#161F32] border-gray-700"
+                                    className="dark:bg-[#161F32] dark:border-gray-700"
                                     rows={3}
                                 />
                             </div>

@@ -1,6 +1,6 @@
 import { DashboardLayout } from "../components/layouts/dashboard-layout"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../components/ui/card"
-import {Car} from "lucide-react"
+import {ArrowLeft, ArrowRight, Camera, Car, Check, Plus} from "lucide-react"
 import {CustomButton} from "../../Home/utils";
 import {useState, useRef, ChangeEvent} from "react";
 import '../styles/Global.css'
@@ -16,6 +16,7 @@ import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
+import {Checkbox, Textarea} from "@headlessui/react";
 
 const carsData = [
   {
@@ -170,21 +171,22 @@ const Cars = () => {
           </div>
 
           <Dialog open={isOpen} onOpenChange={setIsOpen}>
-            <DialogContent className="bg-slate-800/95 backdrop-blur-sm sm:max-w-[700px]">
+            <DialogContent className="dark:bg-slate-900 sm:max-w-[750px] max-h-[90vh] overflow-y-auto">
               <DialogHeader>
-                <DialogTitle>Add New Car</DialogTitle>
+                <DialogTitle className="text-xl font-bold">Add New Car</DialogTitle>
               </DialogHeader>
-              <form onSubmit={handleFormSubmit}>
-                <Tabs value={activeTab} onValueChange={setActiveTab} className="mt-4">
+              <form onSubmit={handleFormSubmit} className="mt-2">
+                <Tabs value={activeTab} onValueChange={setActiveTab}>
                   <TabsList className="grid w-full grid-cols-2">
                     <TabsTrigger value="basic">Basic Information</TabsTrigger>
                     <TabsTrigger value="additional">Additional Information</TabsTrigger>
                   </TabsList>
 
-                  <TabsContent value="basic" className="space-y-4 pt-4">
-                    <div className="grid grid-cols-2 gap-4">
+                  {/* Basic Information Tab */}
+                  <TabsContent value="basic" className="space-y-6 pt-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-2">
-                        <Label htmlFor="model">Model *</Label>
+                        <Label htmlFor="model">Model <span className="text-red-500">*</span></Label>
                         <Input
                             id="model"
                             name="model"
@@ -192,10 +194,12 @@ const Cars = () => {
                             onChange={handleInputChange}
                             placeholder="Tesla Model S"
                             required
+                            className="dark:bg-slate-800"
                         />
                       </div>
+
                       <div className="space-y-2">
-                        <Label htmlFor="year">Year *</Label>
+                        <Label htmlFor="year">Year <span className="text-red-500">*</span></Label>
                         <Input
                             id="year"
                             name="year"
@@ -206,13 +210,12 @@ const Cars = () => {
                             min="1900"
                             max="2099"
                             required
+                            className="dark:bg-slate-800"
                         />
                       </div>
-                    </div>
 
-                    <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label htmlFor="price">Price *</Label>
+                        <Label htmlFor="price">Price <span className="text-red-500">*</span></Label>
                         <Input
                             id="price"
                             name="price"
@@ -220,10 +223,12 @@ const Cars = () => {
                             onChange={handleInputChange}
                             placeholder="$79,990"
                             required
+                            className="dark:bg-slate-800"
                         />
                       </div>
+
                       <div className="space-y-2">
-                        <Label htmlFor="color">Color *</Label>
+                        <Label htmlFor="color">Color <span className="text-red-500">*</span></Label>
                         <Input
                             id="color"
                             name="color"
@@ -231,13 +236,12 @@ const Cars = () => {
                             onChange={handleInputChange}
                             placeholder="Midnight Silver"
                             required
+                            className="dark:bg-slate-800"
                         />
                       </div>
-                    </div>
 
-                    <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label htmlFor="mileage">Mileage *</Label>
+                        <Label htmlFor="mileage">Mileage <span className="text-red-500">*</span></Label>
                         <Input
                             id="mileage"
                             name="mileage"
@@ -245,18 +249,20 @@ const Cars = () => {
                             onChange={handleInputChange}
                             placeholder="0 miles"
                             required
+                            className="dark:bg-slate-800"
                         />
                       </div>
+
                       <div className="space-y-2">
-                        <Label htmlFor="status">Status *</Label>
+                        <Label htmlFor="status">Status <span className="text-red-500">*</span></Label>
                         <Select
                             value={formData.status}
                             onValueChange={(value) => handleSelectChange("status", value)}
                         >
-                          <SelectTrigger>
+                          <SelectTrigger className="dark:bg-slate-800">
                             <SelectValue placeholder="Select status" />
                           </SelectTrigger>
-                          <SelectContent>
+                          <SelectContent className="dark:bg-slate-800">
                             <SelectItem value="New">New</SelectItem>
                             <SelectItem value="Used">Used</SelectItem>
                             <SelectItem value="Certified Pre-Owned">Certified Pre-Owned</SelectItem>
@@ -265,11 +271,11 @@ const Cars = () => {
                       </div>
                     </div>
 
-                    <div className="space-y-2">
-                      <Label>Upload Images (4-6 images) *</Label>
-                      <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-3">
+                      <Label>Upload Images (4-6 images) <span className="text-red-500">*</span></Label>
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                         {imageFields.map((_, index) => (
-                            <div key={index} className="relative">
+                            <div key={index} className="relative aspect-square">
                               <Input
                                   type="file"
                                   accept="image/*"
@@ -280,7 +286,7 @@ const Cars = () => {
                               />
                               <Label
                                   htmlFor={`image-upload-${index}`}
-                                  className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer hover:bg-slate-700/50"
+                                  className="flex flex-col items-center justify-center w-full h-full border-2 border-dashed rounded-lg cursor-pointer hover:bg-slate-700/30 transition-colors"
                               >
                                 {formData.images[index] ? (
                                     <>
@@ -293,7 +299,7 @@ const Cars = () => {
                                           type="button"
                                           variant="ghost"
                                           size="sm"
-                                          className="absolute bottom-1 right-1 text-red-500 hover:text-red-600 bg-white/80 rounded-full p-1 h-6 w-6"
+                                          className="absolute top-2 right-2 text-red-500 hover:text-red-600 bg-white/90 dark:bg-slate-800/90 rounded-full p-1 h-6 w-6"
                                           onClick={(e) => {
                                             e.stopPropagation();
                                             removeImage(index);
@@ -304,8 +310,8 @@ const Cars = () => {
                                     </>
                                 ) : (
                                     <>
-                                      <Car className="w-8 h-8 mb-2 text-gray-400" />
-                                      <p className="text-sm text-gray-400">
+                                      <Camera className="w-6 h-6 mb-2 text-gray-400" />
+                                      <p className="text-sm text-center text-gray-400 px-2">
                                         {index < 4 ? `Required Image ${index + 1}` : "Optional Image"}
                                       </p>
                                     </>
@@ -322,7 +328,7 @@ const Cars = () => {
                               onClick={addImageField}
                               className="mt-2"
                           >
-                            + Add Another Image
+                            <Plus className="w-4 h-4 mr-2" /> Add Another Image
                           </Button>
                       )}
                     </div>
@@ -331,26 +337,35 @@ const Cars = () => {
                       <Button
                           type="button"
                           onClick={() => setActiveTab("additional")}
-                          disabled={!formData.model || !formData.year || !formData.price ||
-                              !formData.color || !formData.mileage || formData.images.length < 4}
+                          disabled={
+                              !formData.model ||
+                              !formData.year ||
+                              !formData.price ||
+                              !formData.color ||
+                              !formData.mileage ||
+                              formData.images.length < 4
+                          }
+                          className="gap-2"
                       >
                         Next: Additional Information
+                        <ArrowRight className="w-4 h-4" />
                       </Button>
                     </div>
                   </TabsContent>
 
-                  <TabsContent value="additional" className="space-y-4 pt-4">
-                    <div className="grid grid-cols-2 gap-4">
+                  {/* Additional Information Tab */}
+                  <TabsContent value="additional" className="space-y-6 pt-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-2">
                         <Label htmlFor="transmission">Transmission</Label>
                         <Select
                             value={formData.transmission}
                             onValueChange={(value) => handleSelectChange("transmission", value)}
                         >
-                          <SelectTrigger>
+                          <SelectTrigger className="dark:bg-slate-800">
                             <SelectValue placeholder="Select transmission" />
                           </SelectTrigger>
-                          <SelectContent>
+                          <SelectContent className="dark:bg-slate-800">
                             <SelectItem value="Automatic">Automatic</SelectItem>
                             <SelectItem value="Manual">Manual</SelectItem>
                             <SelectItem value="CVT">CVT</SelectItem>
@@ -358,16 +373,17 @@ const Cars = () => {
                           </SelectContent>
                         </Select>
                       </div>
+
                       <div className="space-y-2">
                         <Label htmlFor="fuelType">Fuel Type</Label>
                         <Select
                             value={formData.fuelType}
                             onValueChange={(value) => handleSelectChange("fuelType", value)}
                         >
-                          <SelectTrigger>
+                          <SelectTrigger className="dark:bg-slate-800">
                             <SelectValue placeholder="Select fuel type" />
                           </SelectTrigger>
-                          <SelectContent>
+                          <SelectContent className="dark:bg-slate-800">
                             <SelectItem value="Electric">Electric</SelectItem>
                             <SelectItem value="Gasoline">Gasoline</SelectItem>
                             <SelectItem value="Diesel">Diesel</SelectItem>
@@ -376,60 +392,61 @@ const Cars = () => {
                           </SelectContent>
                         </Select>
                       </div>
+
+                      <div className="space-y-2 md:col-span-2">
+                        <Label htmlFor="engine">Engine</Label>
+                        <Input
+                            id="engine"
+                            name="engine"
+                            value={formData.engine}
+                            onChange={handleInputChange}
+                            placeholder="Dual Motor, V6, etc."
+                            className="dark:bg-slate-800"
+                        />
+                      </div>
                     </div>
 
-                    <div className="space-y-2">
-                      <Label htmlFor="engine">Engine</Label>
-                      <Input
-                          id="engine"
-                          name="engine"
-                          value={formData.engine}
-                          onChange={handleInputChange}
-                          placeholder="Dual Motor, V6, etc."
-                      />
-                    </div>
-
-                    <div className="space-y-2">
+                    <div className="space-y-3">
                       <Label>Features</Label>
-                      <div className="grid grid-cols-2 gap-2">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                         {featureOptions.map((feature) => (
-                            <div key={feature} className="flex items-center space-x-2">
-                              <input
-                                  type="checkbox"
+                            <div key={feature} className="flex items-center space-x-3">
+                              <Checkbox
                                   id={`feature-${feature}`}
                                   checked={formData.features.includes(feature)}
-                                  onChange={() => handleFeatureToggle(feature)}
-                                  className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                                  onCheckedChange={() => handleFeatureToggle(feature)}
+                                  className="h-5 w-5 rounded-md border-gray-300 data-[state=checked]:bg-primary"
                               />
-                              <label htmlFor={`feature-${feature}`} className="text-sm">
+                              <Label htmlFor={`feature-${feature}`} className="text-sm font-normal">
                                 {feature}
-                              </label>
+                              </Label>
                             </div>
                         ))}
                       </div>
                     </div>
 
-                    <div className="space-y-2">
+                    <div className="space-y-3">
                       <Label htmlFor="description">Description</Label>
-                      <textarea
+                      <Textarea
                           id="description"
                           name="description"
                           value={formData.description}
                           onChange={handleInputChange}
                           placeholder="Describe the car's condition, special features, etc."
-                          className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 min-h-[100px]"
+                          className="min-h-[120px] dark:bg-slate-800"
                       />
                     </div>
 
-                    <div className="flex justify-between pt-4">
+                    <div className="flex flex-col sm:flex-row justify-between gap-4 pt-4">
                       <Button
                           type="button"
                           variant="outline"
                           onClick={() => setActiveTab("basic")}
+                          className="gap-2"
                       >
-                        Back to Basic Info
+                        <ArrowLeft className="w-4 h-4" /> Back to Basic Info
                       </Button>
-                      <div className="flex gap-2">
+                      <div className="flex gap-3">
                         <Button
                             type="button"
                             variant="outline"
@@ -439,10 +456,17 @@ const Cars = () => {
                         </Button>
                         <Button
                             type="submit"
-                            disabled={!formData.model || !formData.year || !formData.price ||
-                                !formData.color || !formData.mileage || formData.images.length < 4}
+                            disabled={
+                                !formData.model ||
+                                !formData.year ||
+                                !formData.price ||
+                                !formData.color ||
+                                !formData.mileage ||
+                                formData.images.length < 4
+                            }
+                            className="gap-2"
                         >
-                          Add Car
+                          <Check className="w-4 h-4" /> Add Car
                         </Button>
                       </div>
                     </div>

@@ -9,6 +9,7 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { navLists } from '../constants/constant';
 import { User } from "../Types/Type.ts";
+import axios from 'axios';
 
 const NavBar = () => {
   useGSAP(() => {
@@ -28,6 +29,7 @@ const NavBar = () => {
   const [prevScrollY, setPrevScrollY] = useState(window.scrollY);
   const [isVisible, setIsVisible] = useState(true);
   const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true); // Loading state
 
   useEffect(() => {
     document.documentElement.classList.add(theme);
@@ -56,10 +58,18 @@ const NavBar = () => {
   }, [prevScrollY]);
 
   useEffect(() => {
-    // Simulate fetching user data from an API
-    setTimeout(() => {
-      setUser({ id: 1, name: 'John Doe', picture: '/me.jpg' });
-    }, 1000);
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get('/api/me?id=user_123'); // Replace with actual user ID
+        setUser(response.data);
+      } catch (err) {
+        console.error("Failed to fetch user data", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
   }, []);
 
   const toggleTheme = () => {
@@ -115,8 +125,12 @@ const NavBar = () => {
           )}
           <div className="flex items-center gap-6">
             {user ? (
-                <Link to={'/me'}>
-                  <img src={user.picture} alt="User" className="w-10 h-10 rounded-full" />
+                <Link to="/me">
+                  <img
+                      src={user.picture || 'https://github.com/shadcn.png'}
+                      alt="User"
+                      className="w-10 h-10 rounded-full object-cover"
+                  />
                 </Link>
             ) : (
                 !isMobile && (
