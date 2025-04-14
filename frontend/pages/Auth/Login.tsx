@@ -30,7 +30,7 @@ const Login = () => {
       localStorage.setItem('token', response.data.token);
 
       // Navigate to dashboard/home page after login
-      navigate('/dashboard'); // Change path as needed
+      navigate('/me'); // Change path as needed
     } catch (err) {
       if (axios.isAxiosError(err)) {
         setError(err.response?.data?.message || 'Invalid email or password');
