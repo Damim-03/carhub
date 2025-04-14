@@ -118,8 +118,8 @@ export function Sidebar({ className }: SidebarProps) {
               )} />
               {!collapsed && (
                   <span className="text-xl font-bold text-sidebar-primary whitespace-nowrap">
-        Drivona
-      </span>
+                     Drivona
+                  </span>
               )}
             </Link>
           </div>

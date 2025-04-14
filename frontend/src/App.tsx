@@ -10,16 +10,6 @@ import {Product, ProductDetails} from "../pages/Products/pages";
 import PaymentGateway from "../pages/PaymentGatway/pages/PaymentGateway";
 import Me from "../pages/Dashboard/pages/Me.tsx";
 
-export const PrivateRoute = () => {
-    const isAuthenticated = !!localStorage.getItem("token");
-    return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
-};
-
-export const PublicRoute = () => {
-    const isAuthenticated = !!localStorage.getItem("token");
-    return !isAuthenticated ? <Outlet /> : <Navigate to="/dashboard" />;
-};
-
 
 const App = () => {
 
@@ -45,7 +35,7 @@ const App = () => {
         <Routes>
 
             {/* Public Routes */}
-            <Route element={<PublicRoute />}>
+            <Route>
                 <Route path="/" element={<Home />} />
                 <Route path="/register" element={<Signup />} />
                 <Route path="/login" element={<Login />} />
@@ -55,7 +45,7 @@ const App = () => {
             </Route>
 
             {/* Protected (Private) Routes */}
-            <Route element={<PrivateRoute />}>
+            <Route>
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/me" element={<Me />} />
                 <Route path="/overwrite" element={<Overwrite />} />
