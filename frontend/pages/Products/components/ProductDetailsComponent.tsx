@@ -12,12 +12,12 @@ interface ProductDetailsProps {
 
 const ProductDetailsComponent = ({ product, className }: ProductDetailsProps) => {
     return (
-        <div className={cn("bg-white rounded-md shadow-sm p-6", className)}>
+        <div className={cn("bg-white rounded-md shadow-sm p-6 dark:bg-slate-800", className)}>
             <Tabs defaultValue="description">
                 <TabsList className="grid w-full grid-cols-3">
-                    <TabsTrigger value="description">Description</TabsTrigger>
-                    <TabsTrigger value="specifications">Specifications</TabsTrigger>
-                    <TabsTrigger value="reviews">
+                    <TabsTrigger value="description" className={'bg-slate-100 dark:bg-slate-400'}>Description</TabsTrigger>
+                    <TabsTrigger value="specifications" className={'bg-slate-100 dark:bg-slate-400'}>Specifications</TabsTrigger>
+                    <TabsTrigger value="reviews" className={'bg-slate-100 dark:bg-slate-400'}>
                         Reviews ({product.reviewCount})
                     </TabsTrigger>
                 </TabsList>

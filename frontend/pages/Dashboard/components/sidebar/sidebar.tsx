@@ -5,14 +5,14 @@ import {
   ChevronLeft,
   FileText,
   Home,
-  LayoutDashboard,
+  LayoutDashboard, LogOut,
   PackageOpen,
   ShoppingCart, User,
   UserPlus,
   Users
 } from "lucide-react";
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import ToggleButton from "../../../../Home/components/ToggleButton";
 import gsap from "gsap";
 
@@ -58,6 +58,25 @@ export function Sidebar({ className }: SidebarProps) {
         localStorage.setItem("theme", newTheme);
       },
     });
+  };
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check for the token on component mount
+    const token = localStorage.getItem("token");
+    if (!token) {
+      // Redirect to login if no token is found
+      navigate("/login", { replace: true });
+    }
+  }, [navigate]);
+
+  const handleLogout = () => {
+    // Remove token from localStorage when user logs out
+    localStorage.removeItem('token');
+
+    // Redirect to login page
+    navigate('/login', { replace: true });
   };
 
   const links: SidebarLink[] = [
@@ -132,8 +151,18 @@ export function Sidebar({ className }: SidebarProps) {
           ))}
         </nav>
 
-        <div className="p-4 border-t border-sidebar-border flex items-center justify-center">
+        <div className="p-4 border-t border-sidebar-border flex flex-row
+        justify-between items-center w-full">
           <ToggleButton darkMode={theme === "dark"} toggleTheme={toggleTheme} />
+
+          <Button
+              variant="ghost"
+              size="icon"
+              className="hover:bg-red-600 hover:text-white transition"
+              onClick={handleLogout}
+          >
+            <LogOut className="h-5 w-5" />
+          </Button>
         </div>
       </div>
   );

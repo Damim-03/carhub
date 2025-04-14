@@ -27,6 +27,7 @@ import { toast } from "../hooks/use-toast.ts";
 import { Customer } from "../../../Types/Type.ts";
 
 import {customersData} from "../../../constants/constant.ts";
+import {Tabs, TabsContent, TabsList, TabsTrigger} from "@radix-ui/react-tabs";
 
 
 const Users = () => {
@@ -164,8 +165,8 @@ const Users = () => {
       <DashboardLayout>
         {isAddCustomerOpen && (
             <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-              <div className="bg-white dark:bg-gray-800 p-6 rounded-lg w-full max-w-lg">
-                <div className="flex justify-between items-center mb-6">
+              <div className="bg-white dark:bg-gray-800 p-6 rounded-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+                <div className="flex justify-between items-center mb-6 sticky top-0 bg-white dark:bg-gray-800 pb-4">
                   <h2 className="text-xl font-bold text-gray-900 dark:text-white">Add New Customer</h2>
                   <button
                       onClick={() => setIsAddCustomerOpen(false)}
@@ -224,101 +225,109 @@ const Users = () => {
                   )}
                 </div>
 
-                <div className="space-y-6">
-                  {/* Personal Information Section */}
-                  <div className="space-y-4">
-                    <h3 className="font-medium text-gray-700 dark:text-gray-300">Personal Information</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <Label className="dark:text-gray-300">First Name *</Label>
-                        <Input placeholder="John" required />
-                      </div>
-                      <div>
-                        <Label className="dark:text-gray-300">Last Name *</Label>
-                        <Input placeholder="Doe" required />
-                      </div>
-                      <div className="md:col-span-2">
-                        <Label className="dark:text-gray-300">Email *</Label>
-                        <Input type="email" placeholder="john@example.com" required />
-                      </div>
-                      <div className="md:col-span-2">
-                        <Label className="dark:text-gray-300">Phone *</Label>
-                        <Input type="tel" placeholder="+1 (555) 123-4567" required />
-                      </div>
-                      <div className="md:col-span-2">
-                        <Label className="dark:text-gray-300">Profile Image URL</Label>
-                        <Input placeholder="https://example.com/avatar.jpg" />
-                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Leave blank for default avatar</p>
-                      </div>
-                    </div>
-                  </div>
+                {/* Tabs */}
+                <div className="mb-6">
+                  <Tabs defaultValue="personal" className="w-full">
+                    <TabsList className="grid w-full grid-cols-2">
+                      <TabsTrigger value="personal" className={'dark:bg-slate-700'}>Personal Information</TabsTrigger>
+                      <TabsTrigger value="contact">Contact Information</TabsTrigger>
+                    </TabsList>
 
-                  {/* Contact Address Section */}
-                  <div className="space-y-4">
-                    <h3 className="font-medium text-gray-700 dark:text-gray-300">Contact Address</h3>
-                    <div className="grid grid-cols-1 gap-4">
-                      <div>
-                        <Label className="dark:text-gray-300">Street Address *</Label>
-                        <Input placeholder="123 Main Street" required />
-                      </div>
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div>
-                          <Label className="dark:text-gray-300">Zip Code *</Label>
-                          <Input placeholder="10001" required />
+                    <TabsContent value="personal">
+                      <div className="space-y-4 pt-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div>
+                            <Label className="dark:text-gray-300">First Name *</Label>
+                            <Input placeholder="John" required className="mt-1" />
+                          </div>
+                          <div>
+                            <Label className="dark:text-gray-300">Last Name *</Label>
+                            <Input placeholder="Doe" required className="mt-1" />
+                          </div>
+                          <div className="md:col-span-2">
+                            <Label className="dark:text-gray-300">Email *</Label>
+                            <Input type="email" placeholder="john@example.com" required className="mt-1" />
+                          </div>
+                          <div className="md:col-span-2">
+                            <Label className="dark:text-gray-300">Phone *</Label>
+                            <Input type="tel" placeholder="+1 (555) 123-4567" required className="mt-1" />
+                          </div>
+                          <div className="md:col-span-2">
+                            <Label className="dark:text-gray-300">Profile Image URL</Label>
+                            <Input placeholder="https://example.com/avatar.jpg" className="mt-1" />
+                            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Leave blank for default avatar</p>
+                          </div>
                         </div>
-                        <div className="md:col-span-2">
-                          <Label className="dark:text-gray-300">City *</Label>
-                          <Input placeholder="New York" required />
-                        </div>
-                      </div>
-                      <div>
-                        <Label className="dark:text-gray-300">State/Province</Label>
-                        <Input placeholder="New York" />
-                      </div>
-                      <div>
-                        <Label className="dark:text-gray-300">Country *</Label>
-                        <Select required>
-                          <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Select country" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="us">United States</SelectItem>
-                            <SelectItem value="ca">Canada</SelectItem>
-                            <SelectItem value="uk">United Kingdom</SelectItem>
-                            {/* Add more countries as needed */}
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </div>
-                  </div>
 
-                  {/* Account Status */}
-                  <div className="space-y-4">
-                    <h3 className="font-medium text-gray-700 dark:text-gray-300">Account Settings</h3>
-                    <div>
-                      <Label className="dark:text-gray-300">Status *</Label>
-                      <Select defaultValue="active" required>
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Select status" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="active">Active</SelectItem>
-                          <SelectItem value="inactive">Inactive</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
+                        {/* Account Status */}
+                        <div className="pt-4">
+                          <h3 className="font-medium text-gray-700 dark:text-gray-300 mb-4">Account Settings</h3>
+                          <div>
+                            <Label className="dark:text-gray-300">Status *</Label>
+                            <Select defaultValue="active" required className="mt-1">
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select status" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="active">Active</SelectItem>
+                                <SelectItem value="inactive">Inactive</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        </div>
+                      </div>
+                    </TabsContent>
+
+                    <TabsContent value="contact">
+                      <div className="space-y-4 pt-4">
+                        <div className="grid grid-cols-1 gap-4">
+                          <div>
+                            <Label className="dark:text-gray-300">Street Address *</Label>
+                            <Input placeholder="123 Main Street" required className="mt-1" />
+                          </div>
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                              <Label className="dark:text-gray-300">Zip Code *</Label>
+                              <Input placeholder="10001" required className="mt-1" />
+                            </div>
+                            <div className="md:col-span-2">
+                              <Label className="dark:text-gray-300">City *</Label>
+                              <Input placeholder="New York" required className="mt-1" />
+                            </div>
+                          </div>
+                          <div>
+                            <Label className="dark:text-gray-300">State/Province</Label>
+                            <Input placeholder="New York" className="mt-1" />
+                          </div>
+                          <div>
+                            <Label className="dark:text-gray-300">Country *</Label>
+                            <Select required className="mt-1">
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select country" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="us">United States</SelectItem>
+                                <SelectItem value="ca">Canada</SelectItem>
+                                <SelectItem value="uk">United Kingdom</SelectItem>
+                                {/* Add more countries as needed */}
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        </div>
+                      </div>
+                    </TabsContent>
+                  </Tabs>
                 </div>
 
-                <div className="mt-8 flex justify-end gap-3">
+                <div className="mt-8 flex justify-end gap-3 sticky bottom-0 bg-white dark:bg-gray-800 pt-4">
                   <Button
                       variant="outline"
                       onClick={() => setIsAddCustomerOpen(false)}
-                      className="dark:border-gray-600 dark:text-gray-300"
+                      className="dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
                   >
                     Cancel
                   </Button>
-                  <Button>Add Customer</Button>
+                  <Button className="bg-primary hover:bg-primary/90">Add Customer</Button>
                 </div>
               </div>
             </div>
@@ -337,7 +346,8 @@ const Users = () => {
 
           <div className="grid grid-cols-1 gap-6">
             {users.map((customer) => (
-                <Card key={customer.id} className="hover:shadow-md transition-shadow">
+                <Card key={customer.id} className="hover:shadow-md transition-shadow border-none
+                dark:bg-slate-800 dark:hover:shadow-slate-500">
                   <CardHeader className="pb-3">
                     <div className="flex items-start justify-between">
                       <div className="flex items-center gap-4">

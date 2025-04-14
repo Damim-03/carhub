@@ -14,7 +14,7 @@ const RelatedProducts = ({ products, className }: RelatedProductsProps) => {
 
     return (
         <div className={cn("space-y-4", className)}>
-            <span className="block w-full border-t-2 border-white"></span>
+            <span className="block w-full dark:border-b-gray-400"></span>
             <h2 className="text-xl font-semibold py-5 text-center text-black dark:text-white">
                 You May Also Like
             </h2>
@@ -22,7 +22,9 @@ const RelatedProducts = ({ products, className }: RelatedProductsProps) => {
                 {products.slice(0, isMobile ? 4 : 10).map((product) => (
                     <Card
                         key={product.id}
-                        className="overflow-hidden hover:shadow-lg transition-shadow rounded-xl p-3"
+                        className="overflow-hidden hover:shadow-lg
+                        transition-shadow rounded-xl p-3 border-none
+                        bg-light-white-100 dark:bg-gray-700 hover:shadow-white"
                     >
                         <div className="relative aspect-square overflow-hidden">
                             <img

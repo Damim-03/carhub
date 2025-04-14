@@ -1,20 +1,28 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Search, User, X } from "lucide-react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
 import { navlists_mercedes } from "../../../../constants/constant";
 
-const NavBar_Mercedes = () => {
+interface NavBarMercedesProps {
+    activeSection?: number;
+    scrollToSection?: (index: number) => void;
+}
+
+const NavBar_Mercedes: React.FC<NavBarMercedesProps> = ({
+                                                            activeSection = 0,
+                                                            scrollToSection = () => {}
+                                                        }) => {
     const [isVideoPlaying, setIsVideoPlaying] = useState(true);
     const [isNavbarVisible, setIsNavbarVisible] = useState(false);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const lastScrollY = useRef(0);
-    const navbarRef = useRef(null);
-    const miniNavbarRef = useRef(null);
-    const searchRef = useRef(null);
-    const inputRef = useRef(null);
+    const navbarRef = useRef<HTMLDivElement>(null);
+    const miniNavbarRef = useRef<HTMLDivElement>(null);
+    const searchRef = useRef<HTMLDivElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
 
     // Animate logo after video
     useEffect(() => {
@@ -56,9 +64,8 @@ const NavBar_Mercedes = () => {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-    const handleSearch = (e) => {
+    const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
-        // Implement search functionality here
         console.log("Searching for:", searchQuery);
     };
 
@@ -274,14 +281,20 @@ const NavBar_Mercedes = () => {
                         animate="visible"
                         transition={{ staggerChildren: 0.1 }}
                     >
-                        {navlists_mercedes.map((item) => (
+                        {navlists_mercedes.map((item, index) => (
                             <motion.div
                                 key={item.id}
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.6, ease: "easeOut" }}
                             >
-                                <Link to={item.link} className="nav-item hover:text-gray-400 transition-colors duration-200">
+                                <Link
+                                    to={item.link}
+                                    className={`nav-item hover:text-gray-400 transition-colors duration-200 ${
+                                        activeSection === index ? "text-gray-500" : ""
+                                    }`}
+                                    onClick={() => scrollToSection(index)}
+                                >
                                     {item.text}
                                 </Link>
                             </motion.div>

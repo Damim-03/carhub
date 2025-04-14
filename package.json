@@ -1,0 +1,16 @@
+{
+  "name": "carhub",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --watch backend/src -e ts --exec node --no-warnings --loader ts-node/esm --experimental-specifier-resolution=node backend/src/app.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@prisma/client": "^6.6.0",
+    "dotenv": "^16.4.7"
+  }
+}
