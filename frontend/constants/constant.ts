@@ -129,9 +129,8 @@ export const manufacturers = [
 
   export const navLists = [
     { id: 1, text: "Vehicles", link: "/vehicles" },
-    { id: 2, text: "Services", link: "/services" },
-    { id: 3, text: "Product", link: "/Product" },
-    { id: 4, text: "AboutUS", link: "/aboutus" }
+    { id: 2, text: "Services", link: "/Services" },
+    { id: 3, text: "AboutUS", link: "/aboutus" },
   ];
 
   export const navlists_mercedes = [
@@ -258,37 +257,37 @@ export const teamMembers = [
         id: 1,
         name: "Sarah Johnson",
         role: "CEO & Founder",
-        bio: "Sarah founded CarHub with a vision to revolutionize the automotive industry through technology and customer-centric services.",
-        image: "/team/sarah.jpg"
+        bio: "Sarah founded Drivona with a vision to revolutionize the automotive industry through technology and customer-centric services.",
+        image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
     },
     {
         id: 2,
         name: "Michael Rodriguez",
         role: "Chief Operations Officer",
         bio: "With over 15 years in the automotive industry, Michael ensures our operations run smoothly and efficiently.",
-        image: "/team/michael.jpg"
+        image: "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
     },
     {
         id: 3,
         name: "David Chen",
         role: "Chief Technology Officer",
-        bio: "David leads our tech initiatives, developing innovative solutions that keep CarHub at the forefront of the industry.",
-        image: "/team/david.jpg"
+        bio: "David leads our tech initiatives, developing innovative solutions that keep Drivona at the forefront of the industry.",
+        image: "https://randomuser.me/api/portraits/men/32.jpg"
     },
     {
         id: 4,
         name: "Amara Wilson",
         role: "Customer Experience Director",
-        bio: "Amara is dedicated to creating exceptional experiences for every customer who interacts with CarHub.",
-        image: "/team/amara.jpg"
+        bio: "Amara is dedicated to creating exceptional experiences for every customer who interacts with Drivona.",
+        image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
     }
 ];
 
 export const companyHistory = [
     {
         year: "2015",
-        milestone: "CarHub Founded",
-        description: "CarHub was established with a mission to simplify car rental and automotive services."
+        milestone: "Drivona Founded",
+        description: "Drivona was established with a mission to simplify car rental and automotive services."
     },
     {
         year: "2017",

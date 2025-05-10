@@ -25,15 +25,19 @@ const makeFullPayment = async (req, res) => {
     if (sale.paymentMethod !== "CASH") {
         throw new HttpExeception("Sale is not in full payment", 400, Exceptions.NOT_OK);
     }
-    if (sale.paymentStatus !== "PENDING") {
+    if (sale.paymentStatus !== "IN_PROGRESS") {
+        if (sale.paymentStatus == "PENDING") {
+            throw new HttpExeception("You have to pay down payment first", 400, Exceptions.NOT_OK);
+        }
         throw new HttpExeception("Payment is already done", 400, Exceptions.ALREADY_EXIST);
     }
     return prisma.$transaction(async (tx) => {
+        const paymentValue = Number(sale.salePrice) * 0.8;
         await tx.payment.create({
             data: {
                 saleId: saleId,
                 paymentDate: dateFormatter(new Date()),
-                paymentAmount: sale.salePrice,
+                paymentAmount: paymentValue,
                 paymentType: "FULL_PAYMENT"
             }
         });
@@ -45,7 +49,8 @@ const makeFullPayment = async (req, res) => {
                 paymentStatus: "COMPLETED"
             }
         });
-        sendNotificaionEmail(sale.user.email, `Dear ${sale.user.firstName + " " + sale.user.lastName},\n\nWe are pleased to inform you that your full payment of ${sale.salePrice} has been successfully processed.\n\nThank you for your purchase!\n\nBest regards,\nDrivona Team`);
+        sendNotificaionEmail(sale.user.email, `عزيزي ${sale.user.firstName + " " + sale.user.lastName}،\n\nيسعدنا إبلاغك بأنه قد تم معالجة الدفعة  التكميلية
+ الخاصة بك بقيمة ${paymentValue} بنجاح.\n\nشكرًا لشرائك!\n\nمع أطيب التحيات،\nفريق Drivona`);
         res.status(200).json({
             ok: true,
             message: "Payment done successfully"

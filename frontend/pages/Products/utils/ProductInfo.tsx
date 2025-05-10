@@ -1,24 +1,19 @@
 import { useState } from "react";
 import { cn } from "../lib/utils";
-import { ProductDetails, ProductColor } from "../data/productData";
+import { ProductColor } from "../data/productData";
 import Rating from "./Rating";
-import { Heart, ShoppingCart, Truck } from "lucide-react";
+import { ProductInfoProps } from '../../../Types/Type.ts'
+import { Loader2, Truck} from "lucide-react";
 import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
-import { useToast } from "../ui/use-toast";
 import {useNavigate} from "react-router-dom";
-
-interface ProductInfoProps {
-    product: ProductDetails;
-    className?: string;
-}
 
 const ProductInfo = ({ product, className }: ProductInfoProps) => {
     const [selectedColor, setSelectedColor] = useState<ProductColor | null>(
         product.colors.length > 0 ? product.colors[0] : null
     );
     const [quantity, setQuantity] = useState(1);
-    const { toast } = useToast();
+    const [isProcessing, setIsProcessing] = useState(false);
 
     const navigate = useNavigate();
 
@@ -26,24 +21,9 @@ const ProductInfo = ({ product, className }: ProductInfoProps) => {
         ? Math.round(((product.price - product.discountPrice) / product.price) * 100)
         : 0;
 
-    const handleAddToCart = () => {
-        toast({
-            title: "Added to cart",
-            description: `${quantity} x ${product.name}${
-                selectedColor ? ` (${selectedColor.name})` : ""
-            } has been added to your cart.`,
-        });
-    };
 
-    const handleBuyNow = () => {
-        toast({
-            title: "Proceeding to checkout",
-            description: `${quantity} x ${product.name}${
-                selectedColor ? ` (${selectedColor.name})` : ""
-            } - Ready for purchase`,
-            variant: "success",
-        });
-        navigate('/payment-process');
+    const handleBuyNow = async () => {
+        navigate('/payment')
     };
 
     const handleQuantityChange = (value: number) => {
@@ -210,31 +190,20 @@ const ProductInfo = ({ product, className }: ProductInfoProps) => {
 
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-3 pt-2">
-                    <Button
-                        className="flex-1 bg-red-600 hover:bg-red-700 text-white dark:bg-red-500 dark:hover:bg-red-600"
-                        size="lg"
-                        onClick={handleBuyNow}
-                        disabled={product.inStock === 0}
-                    >
-                        Buy Now
-                    </Button>
                 <Button
-                    variant="outline"
-                    className="flex-1 border-red-500 text-red-500 hover:bg-red-50 hover:text-red-600 dark:border-red-400 dark:text-red-400 dark:hover:bg-gray-700"
+                    className="flex-1 bg-red-600 hover:bg-red-700 text-white dark:bg-red-500 dark:hover:bg-red-600"
                     size="lg"
-                    onClick={handleAddToCart}
-                    disabled={product.inStock === 0}
+                    onClick={handleBuyNow}
+                    disabled={product.inStock === 0 || isProcessing}
                 >
-                    <ShoppingCart className="mr-2 h-4 w-4" />
-                    Add to Cart
-                </Button>
-                <Button
-                    variant="outline"
-                    size="icon"
-                    className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
-                    aria-label="Add to wishlist"
-                >
-                    <Heart className="h-5 w-5" />
+                    {isProcessing ? (
+                        <div className="flex items-center gap-2">
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                            Processing...
+                        </div>
+                    ) : (
+                        "Buy Now"
+                    )}
                 </Button>
             </div>
         </div>

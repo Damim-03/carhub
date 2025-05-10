@@ -1,5 +1,6 @@
-import { LucideIcon } from "lucide-react";
-import { MouseEventHandler } from "react";
+import {LucideIcon, LucideProps} from "lucide-react";
+import {ChangeEvent, MouseEventHandler} from "react";
+import {ProductDetails} from "../pages/Products/data/productData.ts";
 
 export interface CarProps {
   id: number;
@@ -17,6 +18,16 @@ export interface CarProps {
   year: number;
 }
 
+export interface InputFieldProps {
+  icon: React.ComponentType<LucideProps>;
+  type: React.HTMLInputTypeAttribute;
+  placeholder: string;
+  value: string;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void; // Properly typed
+  required?: boolean;
+  autoComplete?: string;
+}
+
 export interface OrderItem {
   id: number;
   name: string;
@@ -30,6 +41,11 @@ export interface Order {
   items: OrderItem[];
   total: number;
   paymentStatus: string;
+}
+
+export interface PaymentContextType {
+  amount: number; // Explicitly type amount as number
+  // ...other payment methods
 }
 
 export interface Customer {
@@ -117,6 +133,11 @@ export interface RegisterButtonProps {
 export interface OptionProps {
   title: string;
   value: string;
+}
+
+export interface ProductInfoProps {
+  product: ProductDetails;
+  className?: string;
 }
 
 export interface InputFieldProps {

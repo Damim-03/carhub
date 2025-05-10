@@ -1,15 +1,10 @@
-import { useState, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import { ProductImage } from "../data/productData";
-import { ImageGalleryProps } from '../data/productData'
+import { ImageGalleryProps } from '../data/productData';
 import { cn } from "../lib/utils";
 import { Maximize2 } from "lucide-react";
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import { useIsMobile } from "../hooks/use-mobile";
-
-interface ImageGalleryProps {
-    images: ProductImage[];
-    className?: string;
-}
 
 const ImageGallery = ({ images, className }: ImageGalleryProps) => {
     const [selectedImage, setSelectedImage] = useState<ProductImage>(images[0]);
@@ -18,14 +13,14 @@ const ImageGallery = ({ images, className }: ImageGalleryProps) => {
     const isMobile = useIsMobile();
 
     const handleImageHover = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-        if (!isZoomed || isMobile) return;
+        if (!isZoomed || isMobile || selectedImage.type === 'video') return;
 
         const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
         const x = Math.max(0, Math.min(100, ((e.clientX - left) / width) * 100));
         const y = Math.max(0, Math.min(100, ((e.clientY - top) / height) * 100));
 
         setZoomPosition({ x, y });
-    }, [isZoomed, isMobile]);
+    }, [isZoomed, isMobile, selectedImage.type]);
 
     const handleImageSelect = useCallback((image: ProductImage) => {
         setSelectedImage(image);
@@ -35,7 +30,7 @@ const ImageGallery = ({ images, className }: ImageGalleryProps) => {
     if (!images || images.length === 0) {
         return (
             <div className={cn("flex items-center justify-center h-[300px] bg-gray-100 dark:bg-gray-800 rounded-md", className)}>
-                <p className="text-gray-500 dark:text-gray-400">No images available</p>
+                <p className="text-gray-500 dark:text-gray-400">No media available</p>
             </div>
         );
     }
@@ -57,60 +52,112 @@ const ImageGallery = ({ images, className }: ImageGalleryProps) => {
                         onClick={() => handleImageSelect(image)}
                         aria-label={`View ${image.alt}`}
                     >
-                        <img
-                            src={image.url}
-                            alt={image.alt}
-                            className="w-full h-full object-cover"
-                            loading="lazy"
-                        />
+                        {image.type === 'video' ? (
+                            <div className="relative w-full h-full">
+                                <video
+                                    muted
+                                    loop
+                                    playsInline
+                                    disablePictureInPicture
+                                    className="w-full h-full object-cover"
+                                >
+                                    <source src={image.url} type="video/mp4" />
+                                </video>
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                    <div className="w-6 h-6 bg-black/50 rounded-full flex items-center justify-center">
+                                        <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M6.3 2.8L16.7 10l-10.4 7.2V2.8z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        ) : (
+                            <img
+                                src={image.url}
+                                alt={image.alt}
+                                className="w-full h-full object-cover"
+                                loading="lazy"
+                            />
+                        )}
                     </button>
                 ))}
             </div>
 
-            {/* Main Image */}
+            {/* Main Image/Video */}
             <div className="relative flex-1 order-1 md:order-2">
                 <Dialog>
                     <div
-                        className="relative overflow-hidden rounded-md bg-white dark:bg-gray-900 h-[300px] sm:h-[400px] md:h-[500px] cursor-zoom-in"
-                        onMouseMove={handleImageHover}
-                        onMouseEnter={() => !isMobile && setIsZoomed(true)}
-                        onMouseLeave={() => setIsZoomed(false)}
-                        aria-label="Product image zoom area"
+                        className={cn(
+                            "relative overflow-hidden rounded-md bg-white dark:bg-gray-900 h-[300px] sm:h-[400px] md:h-[500px]",
+                            selectedImage.type === 'image' ? "cursor-zoom-in" : ""
+                        )}
+                        onMouseMove={selectedImage.type === 'image' ? handleImageHover : undefined}
+                        onMouseEnter={selectedImage.type === 'image' ? () => !isMobile && setIsZoomed(true) : undefined}
+                        onMouseLeave={selectedImage.type === 'image' ? () => setIsZoomed(false) : undefined}
+                        aria-label={selectedImage.type === 'video' ? "Product video" : "Product image zoom area"}
                     >
-                        <img
-                            src={selectedImage.url}
-                            alt={selectedImage.alt}
-                            className={cn(
-                                "w-full h-full object-contain transition-transform duration-200",
-                                isZoomed && !isMobile ? "scale-125" : "scale-100"
-                            )}
-                            style={{
-                                transformOrigin: isZoomed && !isMobile
-                                    ? `${zoomPosition.x}% ${zoomPosition.y}%`
-                                    : "center"
-                            }}
-                        />
-
-                        {/* Fullscreen Button */}
-                        <DialogTrigger asChild>
-                            <button
-                                className="absolute bottom-4 right-4 p-2 bg-white/80 dark:bg-gray-800/80 rounded-full shadow-md hover:bg-white dark:hover:bg-gray-700 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500"
-                                aria-label="View image in fullscreen"
-                                title="View full screen"
+                        {selectedImage.type === 'video' ? (
+                            <video
+                                autoPlay
+                                muted
+                                loop
+                                controls
+                                playsInline
+                                className="w-full h-full object-contain"
                             >
-                                <Maximize2 className="h-5 w-5 text-gray-800 dark:text-white" />
-                            </button>
-                        </DialogTrigger>
+                                <source src={selectedImage.url} type="video/mp4" />
+                                Your browser does not support the video tag.
+                            </video>
+                        ) : (
+                            <>
+                                <img
+                                    src={selectedImage.url}
+                                    alt={selectedImage.alt}
+                                    className={cn(
+                                        "w-full h-full object-contain transition-transform duration-200",
+                                        isZoomed && !isMobile ? "scale-125" : "scale-100"
+                                    )}
+                                    style={{
+                                        transformOrigin: isZoomed && !isMobile
+                                            ? `${zoomPosition.x}% ${zoomPosition.y}%`
+                                            : "center"
+                                    }}
+                                />
+                                {/* Fullscreen Button - Only shown for images */}
+                                <DialogTrigger asChild>
+                                    <button
+                                        className="absolute bottom-4 right-4 p-2 bg-white/80 dark:bg-gray-800/80 rounded-full shadow-md hover:bg-white dark:hover:bg-gray-700 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500"
+                                        aria-label="View image in fullscreen"
+                                        title="View full screen"
+                                    >
+                                        <Maximize2 className="h-5 w-5 text-gray-800 dark:text-white" />
+                                    </button>
+                                </DialogTrigger>
+                            </>
+                        )}
                     </div>
 
-                    {/* Fullscreen Image Modal */}
+                    {/* Fullscreen Modal */}
                     <DialogContent className="max-w-5xl w-[95vw] h-[80vh] p-2 flex items-center justify-center bg-white dark:bg-gray-900">
-                        <img
-                            src={selectedImage.url}
-                            alt={selectedImage.alt}
-                            className="max-w-full max-h-full object-contain"
-                            loading="eager"
-                        />
+                        {selectedImage.type === 'video' ? (
+                            <video
+                                autoPlay
+                                muted={false} // Unmute in fullscreen
+                                loop
+                                controls
+                                className="max-w-full max-h-full object-contain"
+                            >
+                                <source src={selectedImage.url} type="video/mp4" />
+                                Your browser does not support the video tag.
+                            </video>
+                        ) : (
+                            <img
+                                src={selectedImage.url}
+                                alt={selectedImage.alt}
+                                className="max-w-full max-h-full object-contain"
+                                loading="eager"
+                            />
+                        )}
                     </DialogContent>
                 </Dialog>
             </div>

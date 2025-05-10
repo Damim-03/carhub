@@ -21,20 +21,34 @@ import {Checkbox, Textarea} from "@headlessui/react";
 const carsData = [
   {
     id: 1,
-    model: "Tesla Model S",
-    logo: '../assets/images/logo.png',
+    model: "Mercedes-Maybach GLS 600",
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Mercedes-Logo.svg/2048px-Mercedes-Logo.svg.png', // High-res Mercedes logo
     year: 2023,
-    price: "$79,990",
-    color: "Midnight Silver",
-    mileage: "0 miles",
-    status: "New",
-    transmission: "Automatic",
-    fuelType: "Electric",
-    engine: "Dual Motor",
-    features: ["Autopilot", "Panoramic Roof", "Premium Sound"],
-    description: "Luxury electric sedan with cutting-edge technology",
-    image: "/placeholder.svg"
-  },
+    price: "$173,500",
+    color: "Obsidian Black Metallic",
+    mileage: "2,500 miles",
+    status: "Certified Pre-Owned",
+    transmission: "9G-Tronic Automatic",
+    fuelType: "Premium Gasoline",
+    engine: "4.0L V8 Biturbo (550hp)",
+    features: [
+      "Executive Rear Seating Package",
+      "E-Active Body Control",
+      "Burmester® High-End 3D Surround Sound",
+      "Rear Seat Entertainment System",
+      "Nappa Leather Interior",
+      "Maybach Exclusive Trim"
+    ],
+    description: "The pinnacle of luxury SUVs with handcrafted details, offering first-class comfort with reclining rear seats, champagne cooler, and exclusive Maybach design elements.",
+    image: "https://www.mbusa.com/content/dam/mb-nafta/us/myco/my23/gls/class-page/desktop/01-2023-GLS-MAYBACH-DESKTOP.jpg.asset.1647460717849.jpg", // Higher quality Maybach image
+    interiorImage: "https://www.mbusa.com/content/dam/mb-nafta/us/myco/my23/gls/class-page/desktop/03-2023-GLS-MAYBACH-DESKTOP.jpg.asset.1647460717849.jpg",
+    performance: {
+      acceleration: "0-60 mph in 4.8s",
+      topSpeed: "155 mph (electronically limited)",
+      fuelEconomy: "15 mpg city / 19 mpg highway"
+    },
+    warranty: "4-year/50,000-mile warranty"
+  }
   // ... other car data objects
 ];
 

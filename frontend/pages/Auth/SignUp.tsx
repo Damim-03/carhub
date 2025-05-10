@@ -1,10 +1,13 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { User, Mail, Lock, Phone } from 'lucide-react';
 import InputField from './utils/InputField';
 import PasswordStrengthMeter from './utils/PasswordStrengthMeter';
+import video1 from '../../public/The BMW M3 Competition _ lost soul _ 4K.mp4';
+import video2 from '../../public/White Knight; GT-R R35 _ 4K.mp4';
+import video3 from '../../public/2025 Mercedes AMG S63e _ SLIDE Edit 4K.mp4';
 
 const SignUp = () => {
   const [firstName, setFirstName] = useState('');
@@ -15,6 +18,7 @@ const SignUp = () => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [currentVideo, setCurrentVideo] = useState<string>(video1);
 
   const navigate = useNavigate();
 
@@ -48,6 +52,22 @@ const SignUp = () => {
 
   return (
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-emerald-900 flex items-center justify-center px-4 sm:px-8">
+        {/* Video Background */}
+        <div className="absolute inset-0 z-0">
+          <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-cover"
+              key={currentVideo}
+          >
+            <source src={currentVideo} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          {/* Overlay for better readability */}
+          <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+        </div>
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
