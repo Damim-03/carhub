@@ -53,7 +53,7 @@ const About = () => {
                         }}
                     ></div>
                     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">About CarHub</h1>
+                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">About Drivona</h1>
                         <p className="text-xl md:text-2xl max-w-3xl mx-auto">
                             We're passionate about cars and committed to providing exceptional automotive services.
                         </p>
@@ -66,15 +66,15 @@ const About = () => {
                         <div className="flex flex-col md:flex-row items-center gap-12">
                             <div className="md:w-1/2">
                                 <img
-                                    src="https://images.unsplash.com/photo-1567963303214-19336f978129?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80"
-                                    alt="CarHub Office"
+                                    src="https://images.pexels.com/photos/1149831/pexels-photo-1149831.jpeg"
+                                    alt="CarHub Electric Fleet"
                                     className="w-full h-auto rounded-xl shadow-lg"
                                 />
                             </div>
                             <div className="md:w-1/2">
                                 <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">Our Story</h2>
                                 <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
-                                    Founded in 2015, CarHub began with a simple mission: to make car rental and automotive services more accessible, transparent, and enjoyable for everyone.
+                                    Founded in 2015, Drivona began with a simple mission: to make car rental and automotive services more accessible, transparent, and enjoyable for everyone.
                                 </p>
                                 <p className="text-lg text-gray-600 dark:text-gray-300">
                                     What started as a small local business has grown into a nationwide service provider, but our commitment to exceptional customer service and quality remains unchanged.
@@ -108,7 +108,7 @@ const About = () => {
                     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                         <SectionHeader
                             title="Our Journey"
-                            subtitle="From our humble beginnings to where we are today, here's how CarHub has evolved over the years."
+                            subtitle="From our humble beginnings to where we are today, here's how Drivona has evolved over the years."
                         />
                         <div className="mt-16 max-w-4xl mx-auto">
                             {companyHistory.map((item, index) => (
@@ -128,7 +128,7 @@ const About = () => {
                     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                         <SectionHeader
                             title="Meet Our Team"
-                            subtitle="The dedicated individuals behind CarHub who work tirelessly to provide you with the best service."
+                            subtitle="The dedicated individuals behind Drivona who work tirelessly to provide you with the best service."
                         />
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
                             {teamMembers.map((member) => (

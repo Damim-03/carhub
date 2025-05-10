@@ -167,7 +167,7 @@ const Users = () => {
             <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
               <div className="bg-white dark:bg-gray-800 p-6 rounded-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
                 <div className="flex justify-between items-center mb-6 sticky top-0 bg-white dark:bg-gray-800 pb-4">
-                  <h2 className="text-xl font-bold text-gray-900 dark:text-white">Add New Customer</h2>
+                  <h2 className="text-xl font-bold text-gray-900 dark:text-white">Add New User</h2>
                   <button
                       onClick={() => setIsAddCustomerOpen(false)}
                       className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
@@ -252,11 +252,6 @@ const Users = () => {
                             <Label className="dark:text-gray-300">Phone *</Label>
                             <Input type="tel" placeholder="+1 (555) 123-4567" required className="mt-1" />
                           </div>
-                          <div className="md:col-span-2">
-                            <Label className="dark:text-gray-300">Profile Image URL</Label>
-                            <Input placeholder="https://example.com/avatar.jpg" className="mt-1" />
-                            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Leave blank for default avatar</p>
-                          </div>
                         </div>
 
                         {/* Account Status */}
@@ -340,7 +335,7 @@ const Users = () => {
             </div>
             <Button onClick={() => setIsAddCustomerOpen(true)}>
               <UserCog className="mr-2 h-4 w-4" />
-              Add New Customer
+              Add New User
             </Button>
           </div>
 
@@ -527,83 +522,152 @@ const Users = () => {
 
           {/* Edit Customer Dialog */}
           <Dialog open={!!editingCustomer} onOpenChange={(open) => !open && setEditingCustomer(null)}>
-            <DialogContent className="sm:max-w-[425px]">
+            <DialogContent className="sm:max-w-[725px]">
               <DialogHeader>
-                <DialogTitle>Edit Customer Information</DialogTitle>
+                <DialogTitle>Edit User Information</DialogTitle>
                 <DialogDescription>
-                  Make changes to the customer's profile information here. Click save when you're done.
+                  Make changes to the User's profile information here. Click save when you're done.
                 </DialogDescription>
               </DialogHeader>
               {editingCustomer && (
-                  <div className="grid gap-4 py-4">
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="name" className="text-right">
-                        Name
-                      </Label>
-                      <Input
-                          id="name"
-                          className="col-span-3"
-                          value={editingCustomer.name}
-                          onChange={(e) => setEditingCustomer({...editingCustomer, name: e.target.value})}
-                      />
+                  <form onSubmit={handleSaveCustomer}>
+                    <div className="grid gap-4 py-4">
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="firstName" className="text-right">
+                          FirstName
+                        </Label>
+                        <Input
+                            id="firstName"
+                            name="firstName"
+                            className="col-span-3"
+                            value={editingCustomer.name}
+                            onChange={(e) => setEditingCustomer({...editingCustomer, name: e.target.value})}
+                        />
+                      </div>
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="lastName" className="text-right">
+                          LastName
+                        </Label>
+                        <Input
+                            id="lastName"
+                            name="lastName"
+                            className="col-span-3"
+                            value={editingCustomer.name}
+                            onChange={(e) => setEditingCustomer({...editingCustomer, name: e.target.value})}
+                        />
+                      </div>
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="email" className="text-right">
+                          Email
+                        </Label>
+                        <Input
+                            id="email"
+                            name="email"
+                            type="email"
+                            className="col-span-3"
+                            value={editingCustomer.email}
+                            onChange={(e) => setEditingCustomer({...editingCustomer, email: e.target.value})}
+                        />
+                      </div>
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="phone" className="text-right">
+                          Phone
+                        </Label>
+                        <Input
+                            id="phone"
+                            name="phone"
+                            className="col-span-3"
+                            value={editingCustomer.phone}
+                            onChange={(e) => setEditingCustomer({...editingCustomer, phone: e.target.value})}
+                        />
+                      </div>
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="address" className="text-right">
+                          Street Address
+                        </Label>
+                        <Input
+                            id="address"
+                            name="address"
+                            className="col-span-3"
+                            value={editingCustomer.address}
+                            onChange={(e) => setEditingCustomer({...editingCustomer, address: e.target.value})}
+                        />
+                      </div>
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="zipcode" className="text-right">
+                          Zip code
+                        </Label>
+                        <Input
+                            id="zipcode"
+                            name="zipcode"
+                            className="col-span-3"
+                            value={editingCustomer.zipcode}
+                            onChange={(e) => setEditingCustomer({...editingCustomer, zipcode: e.target.value})}
+                        />
+                      </div>
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="city" className="text-right">
+                          City
+                        </Label>
+                        <Input
+                            id="city"
+                            name="city"
+                            className="col-span-3"
+                            value={editingCustomer.city}
+                            onChange={(e) => setEditingCustomer({...editingCustomer, city: e.target.value})}
+                        />
+                      </div>
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="state_province" className="text-right">
+                          State/Province
+                        </Label>
+                        <Input
+                            id="state_province"
+                            name="state_province"
+                            className="col-span-3"
+                            value={editingCustomer.state_province}
+                            onChange={(e) => setEditingCustomer({...editingCustomer, state_province: e.target.value})}
+                        />
+                      </div>
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="country" className="text-right">
+                          Country
+                        </Label>
+                        <Input
+                            id="country"
+                            name="country"
+                            className="col-span-3"
+                            value={editingCustomer.country}
+                            onChange={(e) => setEditingCustomer({...editingCustomer, country: e.target.value})}
+                        />
+                      </div>
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="status" className="text-right">
+                          Status
+                        </Label>
+                        <Select
+                            name="status"
+                            value={editingCustomer.status}
+                            onValueChange={(value) => setEditingCustomer({...editingCustomer, status: value as "Active" | "Inactive"})}
+                        >
+                          <SelectTrigger className="col-span-3">
+                            <SelectValue placeholder="Select status" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Active">Active</SelectItem>
+                            <SelectItem value="Inactive">Inactive</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
                     </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="email" className="text-right">
-                        Email
-                      </Label>
-                      <Input
-                          id="email"
-                          type="email"
-                          className="col-span-3"
-                          value={editingCustomer.email}
-                          onChange={(e) => setEditingCustomer({...editingCustomer, email: e.target.value})}
-                      />
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="phone" className="text-right">
-                        Phone
-                      </Label>
-                      <Input
-                          id="phone"
-                          className="col-span-3"
-                          value={editingCustomer.phone}
-                          onChange={(e) => setEditingCustomer({...editingCustomer, phone: e.target.value})}
-                      />
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="address" className="text-right">
-                        Address
-                      </Label>
-                      <Input
-                          id="address"
-                          className="col-span-3"
-                          value={editingCustomer.address}
-                          onChange={(e) => setEditingCustomer({...editingCustomer, address: e.target.value})}
-                      />
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="status" className="text-right">
-                        Status
-                      </Label>
-                      <Select
-                          value={editingCustomer.status}
-                          onValueChange={(value) => setEditingCustomer({...editingCustomer, status: value as "Active" | "Inactive"})}
-                      >
-                        <SelectTrigger className="col-span-3">
-                          <SelectValue placeholder="Select status" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="Active">Active</SelectItem>
-                          <SelectItem value="Inactive">Inactive</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
+                    <DialogFooter>
+                      <Button variant="outline" onClick={() => setEditingCustomer(null)} type="button">
+                        Cancel
+                      </Button>
+                      <Button type="submit">Save changes</Button>
+                    </DialogFooter>
+                  </form>
               )}
-              <DialogFooter>
-                <Button variant="outline" onClick={() => setEditingCustomer(null)}>Cancel</Button>
-                <Button onClick={handleSaveCustomer}>Save changes</Button>
-              </DialogFooter>
             </DialogContent>
           </Dialog>
 

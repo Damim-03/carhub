@@ -11,12 +11,18 @@ import { navLists } from '../constants/constant';
 import { User } from "../Types/Type.ts";
 import axios from 'axios';
 
-const NavBar = () => {
+type NavBarProps = {
+  toggleTheme?: () => void;
+  currentTheme?: string;
+};
+
+const NavBar = ({ toggleTheme: propToggleTheme, currentTheme: propCurrentTheme }: NavBarProps) => {
   useGSAP(() => {
     gsap.to('#Navbar', { opacity: 1, y: 0, duration: 0.8, ease: 'power4.out' });
   }, []);
 
   const getInitialTheme = () => {
+    if (propCurrentTheme) return propCurrentTheme;
     if (localStorage.getItem('theme')) {
       return localStorage.getItem('theme') === 'dark' ? 'dark' : 'light';
     }
@@ -29,12 +35,38 @@ const NavBar = () => {
   const [prevScrollY, setPrevScrollY] = useState(window.scrollY);
   const [isVisible, setIsVisible] = useState(true);
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true); // Loading state
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    document.documentElement.classList.add(theme);
-    localStorage.setItem('theme', theme);
-  }, [theme]);
+    if (propCurrentTheme) {
+      setTheme(propCurrentTheme);
+    }
+  }, [propCurrentTheme]);
+
+  useEffect(() => {
+    if (!propCurrentTheme) {
+      document.documentElement.classList.add(theme);
+      localStorage.setItem('theme', theme);
+    }
+  }, [theme, propCurrentTheme]);
+
+  const internalToggleTheme = () => {
+    const newTheme = theme === 'dark' ? 'light' : 'dark';
+    gsap.to(document.documentElement, {
+      backgroundColor: newTheme === 'dark' ? '#1a202c' : '#ffffff',
+      color: newTheme === 'dark' ? '#ffffff' : '#000000',
+      duration: 0.3,
+      onComplete: () => {
+        if (!propCurrentTheme) {
+          document.documentElement.classList.remove(theme);
+          document.documentElement.classList.add(newTheme);
+          setTheme(newTheme);
+          localStorage.setItem('theme', newTheme);
+        }
+      },
+    });
+    if (propToggleTheme) propToggleTheme();
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -58,38 +90,50 @@ const NavBar = () => {
   }, [prevScrollY]);
 
   useEffect(() => {
+    const controller = new AbortController();
+
     const fetchUserData = async () => {
       try {
-        const response = await axios.get('/api/me?id=user_123'); // Replace with actual user ID
+        const response = await axios.get('/api/me?id=user_123', {
+          signal: controller.signal
+        });
         setUser(response.data);
       } catch (err) {
-        console.error("Failed to fetch user data", err);
+        if (!axios.isCancel(err)) {
+          console.error("Failed to fetch user data", err);
+        }
       } finally {
         setLoading(false);
       }
     };
 
-    fetchUserData();
-  }, []);
-
-  const toggleTheme = () => {
-    const newTheme = theme === 'dark' ? 'light' : 'dark';
-    gsap.to(document.documentElement, {
-      backgroundColor: newTheme === 'dark' ? '#1a202c' : '#ffffff',
-      color: newTheme === 'dark' ? '#ffffff' : '#000000',
-      duration: 0.3,
-      onComplete: () => {
-        document.documentElement.classList.remove(theme);
-        document.documentElement.classList.add(newTheme);
-        setTheme(newTheme);
-        localStorage.setItem('theme', newTheme);
-      },
+    fetchUserData().catch((err) => {
+      if (!axios.isCancel(err)) {
+        console.error("Unhandled error in fetchUserData:", err);
+        setLoading(false);
+      }
     });
-  };
+
+    return () => {
+      controller.abort();
+    };
+  }, []);
 
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
   };
+
+  if (loading) {
+    return (
+        <header className="navbar w-full fixed top-0 z-50 bg-white dark:bg-slate-900 shadow-md">
+          <nav id="Navbar" className="max-w-[1550px] mx-auto flex items-center justify-between px-4 sm:px-16 py-5 relative">
+            <div className="animate-pulse h-6 w-6"></div>
+            <div className="animate-pulse h-6 w-[118px]"></div>
+            <div className="animate-pulse h-6 w-6"></div>
+          </nav>
+        </header>
+    );
+  }
 
   return (
       <header
@@ -108,7 +152,20 @@ const NavBar = () => {
               </button>
           )}
           <Link to="/" className="flex justify-center items-center">
-            <Image src="/logo.svg" alt="logo" width={118} height={18} className="object-contain" />
+            <img
+                src="/light_logo.png"
+                alt="CarHub Logo"
+                className="block dark:hidden object-contain"
+                width={55}
+            />
+
+            {/* Dark logo - shown in dark mode */}
+            <img
+                src="/dark_logo.png"
+                alt="CarHub Logo"
+                className="hidden dark:block object-contain"
+                width={55}
+            />
           </Link>
           {!isMobile && (
               <div className="flex items-center gap-8 lg:gap-28">
@@ -124,7 +181,13 @@ const NavBar = () => {
               </div>
           )}
           <div className="flex items-center gap-6">
-            {user ? (
+            {!user ? (
+                <RegisterButton
+                    title="Register"
+                    btnType="button"
+                    containerStyles="text-primary-blue rounded-full bg-white min-w-[100px] md:min-w-[130px] px-4 py-2 border bg-gray-400 dark:text-primary-blue"
+                />
+            ) : (
                 <Link to="/me">
                   <img
                       src={user.picture || 'https://github.com/shadcn.png'}
@@ -132,16 +195,11 @@ const NavBar = () => {
                       className="w-10 h-10 rounded-full object-cover"
                   />
                 </Link>
-            ) : (
-                !isMobile && (
-                    <RegisterButton
-                        title="Register"
-                        btnType="button"
-                        containerStyles="text-primary-blue rounded-full bg-white min-w-[100px] md:min-w-[130px] px-4 py-2 border bg-gray-400 dark:text-primary-blue"
-                    />
-                )
             )}
-            <ToggleButton darkMode={theme === 'dark'} toggleTheme={toggleTheme} />
+            <ToggleButton
+                darkMode={propCurrentTheme ? propCurrentTheme === 'dark' : theme === 'dark'}
+                toggleTheme={propToggleTheme || internalToggleTheme}
+            />
           </div>
         </nav>
         <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />

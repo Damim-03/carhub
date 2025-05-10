@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { CustomButton, Image } from './components';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
@@ -22,10 +21,10 @@ const Hero = () => {
         {/* Left Section */}
         <div className="flex-1 pt-36 px-4 sm:px-6 lg:px-8">
           <h1 id="hero" className="hero__title opacity-0 dark:text-white text-center sm:text-left">
-            Find, book, rent a car—quick and super easy!
+            Find, book, Buy a car—quick and super easy!
           </h1>
           <p className="hero__subtitle dark:text-white text-center sm:text-left mt-4">
-            Streamline your car rental experience with our effortless booking process.
+            Streamline your car Buyer experience with our effortless booking process.
           </p>
           <CustomButton
               title="Explore Cars"

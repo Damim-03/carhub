@@ -3,9 +3,10 @@ import { Image } from "../../../Home/components";
 
 import { Dialog, Transition } from "@headlessui/react";
 import { CarProps } from "../../../Types/Type";
-import { generateCarImageUrl } from "../../../Data/data";
+//import { generateCarImageUrl } from "../../../Data/data";
 import {CustomButton} from "./index.ts";
 import {Link} from "react-router-dom";
+import { generateCarImageUrl } from "../../../Data/data.ts";
 
 interface CarDetailsProps {
   isOpen: boolean;
@@ -56,8 +57,8 @@ const CarDetails = ({ isOpen, closeModal, car }: CarDetailsProps) => (
                 </button>
 
                 <div className='flex-1 flex flex-col gap-3'>
-                  <div className='relative w-full h-40 bg-pattern bg-cover bg-center rounded-lg'>
-                   <Image src={generateCarImageUrl(car)} alt='car model' fill priority className='object-contain' />
+                  <div className='relative w-full h-45 bg-pattern bg-cover bg-center rounded-lg'>
+                    <Image src={generateCarImageUrl(car)} alt='car model' fill priority className='object-contain' />
                   </div>
 
                   <div className='flex gap-3'>

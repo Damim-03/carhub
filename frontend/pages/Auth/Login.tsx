@@ -1,17 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { Mail, Lock } from 'lucide-react';
 import { InputField } from '../Auth';
 
+import video1 from '../../public/The BMW M3 Competition _ lost soul _ 4K.mp4';
+import video2 from '../../public/White Knight; GT-R R35 _ 4K.mp4';
+import video3 from '../../public/2025 Mercedes AMG S63e _ SLIDE Edit 4K.mp4';
+
 const Login = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [currentVideo, setCurrentVideo] = useState<string>(video1);
 
   const navigate = useNavigate();
+
+  // Array of background videos
+  const backgroundVideos = [video1, video2, video3];
+
+  // Set a random video on component mount
+  useEffect(() => {
+    const randomVideo = backgroundVideos[Math.floor(Math.random() * backgroundVideos.length)];
+    setCurrentVideo(randomVideo);
+  }, []); // Removed backgroundVideos from dependencies since it's static
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -25,15 +39,13 @@ const Login = () => {
       });
 
       console.log('Login successful:', response.data);
-
-      // Example: Save token if returned
       localStorage.setItem('token', response.data.token);
-
-      // Navigate to dashboard/home page after login
-      navigate('/me'); // Change path as needed
-    } catch (err) {
+      navigate('/me');
+    } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
         setError(err.response?.data?.message || 'Invalid email or password');
+      } else if (err instanceof Error) {
+        setError(err.message || 'An unexpected error occurred.');
       } else {
         setError('An unexpected error occurred.');
       }
@@ -43,15 +55,33 @@ const Login = () => {
   };
 
   return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-emerald-900 flex items-center justify-center px-4 sm:px-8">
+      <div className="relative min-h-screen flex items-center justify-center px-4 sm:px-8 overflow-hidden">
+        {/* Video Background */}
+        <div className="absolute inset-0 z-0">
+          <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-cover"
+              key={currentVideo}
+          >
+            <source src={currentVideo} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          {/* Overlay for better readability */}
+          <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+        </div>
+
+        {/* Login Form */}
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg bg-gray-800 bg-opacity-50 backdrop-blur rounded-3xl shadow-xl"
+            className="w-full max-w-md sm:max-w-lg bg-gray-800 bg-opacity-50 backdrop-blur-lg rounded-3xl shadow-xl relative z-10 mx-4"
         >
-          <div className="p-6 sm:p-8">
-            <h1 className="text-3xl sm:text-4xl font-bold mb-6 text-center bg-gradient-to-t from-green-400 to-emerald-500 text-transparent bg-clip-text">
+          <div className="p-8">
+            <h1 className="text-3xl sm:text-4xl font-bold mb-8 text-center bg-gradient-to-t from-sky-300 to-sky-500 text-transparent bg-clip-text">
               Login
             </h1>
 
@@ -59,7 +89,7 @@ const Login = () => {
                 <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mb-4 p-3 bg-red-500 bg-opacity-20 text-red-200 rounded-lg text-sm"
+                    className="mb-6 p-3 bg-red-500 bg-opacity-20 text-red-200 rounded-lg text-sm"
                 >
                   {error}
                 </motion.div>
@@ -71,8 +101,8 @@ const Login = () => {
                   type="email"
                   placeholder="Email Address"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+                  required={true}
                   autoComplete="email"
               />
               <InputField
@@ -80,15 +110,15 @@ const Login = () => {
                   type="password"
                   placeholder="Password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+                  required={true}
                   autoComplete="current-password"
               />
 
               <div className="flex justify-between items-center">
                 <Link
                     to="/forgot-password"
-                    className="text-gray-400 hover:underline hover:text-blue-400 text-sm"
+                    className="text-gray-300 hover:underline hover:text-blue-400 text-sm"
                     aria-label="Forgot password"
                 >
                   Forgot your password?
@@ -98,20 +128,49 @@ const Login = () => {
               <motion.button
                   type="submit"
                   disabled={isLoading}
-                  whileHover={{ scale: isLoading ? 1 : 1.02 }}
-                  whileTap={{ scale: isLoading ? 1 : 0.98 }}
-                  className="mt-4 w-full py-3 px-4 bg-gradient-to-r from-blue-500 to-emerald-600 text-white font-bold rounded-lg shadow-lg hover:from-blue-600 hover:to-emerald-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition duration-200 disabled:opacity-50"
-                  aria-label="Login button"
+                  initial={false}
+                  animate={{
+                    background: isLoading
+                        ? 'linear-gradient(to right, #64748b, #64748b)'
+                        : 'linear-gradient(to right, #3b82f6, #059669)',
+                    opacity: isLoading ? 0.8 : 1,
+                  }}
+                  whileHover={{
+                    scale: isLoading ? 1 : 1.05,
+                    background: isLoading
+                        ? 'linear-gradient(to right, #64748b, #64748b)'
+                        : 'linear-gradient(to right, #2563eb, #047857)',
+                  }}
+                  whileTap={{
+                    scale: isLoading ? 1 : 0.98,
+                  }}
+                  transition={{
+                    duration: 0.3,
+                    ease: "easeInOut",
+                  }}
+                  className="mt-6 w-full py-3 px-4 text-white font-bold rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-800"
+                  aria-label={isLoading ? 'Logging in' : 'Log in'}
               >
-                {isLoading ? 'Logging in...' : 'Log In'}
+                {isLoading ? (
+                    <div className="flex items-center justify-center gap-2">
+                      <motion.span
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                          className="block h-5 w-5 border-2 border-white border-t-transparent rounded-full"
+                      />
+                      Logging in...
+                    </div>
+                ) : (
+                    <span>Log In</span>
+                )}
               </motion.button>
             </form>
           </div>
 
-          <div className="px-4 sm:px-6 py-4 bg-gray-900 bg-opacity-50 text-center">
-            <p className="text-sm text-gray-400">
+          <div className="px-6 py-5 bg-gray-900 bg-opacity-50 rounded-b-3xl text-center">
+            <p className="text-sm text-gray-300">
               Don't have an account?{' '}
-              <Link to="/register" className="text-white hover:underline" aria-label="Sign up">
+              <Link to="/register" className="text-white hover:underline font-medium" aria-label="Sign up">
                 Sign up
               </Link>
             </p>
