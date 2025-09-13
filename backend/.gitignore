@@ -1,7 +1,0 @@
-.env
-node_modules
-dist/*.js.map
-src
-notes.txt
-.qodo
-
